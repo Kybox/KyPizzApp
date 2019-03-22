@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {createRequestOption} from "../../../shared/util/request-util";
-import {ICategory} from "../../../entity/category.model";
+import {createRequestOption} from "../../../../shared/util/request-util";
+import {ICategory} from "../../../../entity/category.model";
 
 type BooleanResponseType = HttpResponse<Boolean>;
 type EntityResponseType = HttpResponse<ICategory>;

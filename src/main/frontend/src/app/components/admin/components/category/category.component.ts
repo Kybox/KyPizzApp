@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CategoryService} from "../../services/category/category.service";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {filter, map} from "rxjs/operators";
-import {ICategory} from "../../../entity/category.model";
+import {ICategory} from "../../../../entity/category.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({

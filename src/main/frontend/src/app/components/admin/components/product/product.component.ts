@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {IProduct} from "../../../entity/product.model";
+import {IProduct} from "../../../../entity/product.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {ICategory} from "../../../entity/category.model";
+import {ICategory} from "../../../../entity/category.model";
 import {CategoryService} from "../../services/category/category.service";
-import {floatFilter} from "../../../shared/util/numeric-util";
+import {floatFilter} from "../../../../shared/util/numeric-util";
 
 @Component({
     selector: 'app-product',

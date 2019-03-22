@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {NavbarComponent} from './layout/navbar/navbar.component';
 import {FormsModule} from "@angular/forms";
 import {ReactiveFormsModule} from "@angular/forms";
-import {AdminModule} from "./admin/admin.module";
+import {AdminModule} from "./components/admin/admin.module";
 
 @NgModule({
     declarations: [

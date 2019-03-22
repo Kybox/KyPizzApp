@@ -1,0 +1,14 @@
+version: '2'
+services:
+  kypizzapp:
+    image: mongo:4.0.2
+    ports:
+      - "27017:27017"
+    restart: always
+    container_name: KyPizzAppDB
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: kypizzapp
+      MONGO_INITDB_ROOT_PASSWORD: kypizzapp
+      MONGO_INITDB_DATABASE: kypizzapp
+    volumes:
+      - "/mongodb/:/data/db/"

@@ -1,0 +1,81 @@
+<div class="d-flex" id="wrapper">
+    <app-admin></app-admin>
+    <div class="container">
+        <div class="row">
+            <div class="card mx-auto shadow" style="margin-top: 40px;">
+                <div class="card-header text-center">
+                    <h4>Administration des catégories de produits</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-center">
+                        <i><b>Il y a actuellement {{categories.length}} catégories</b></i>
+                    </p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-auto">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Ajouter une catégorie
+                                    </div>
+                                    <div class="card-body">
+                                        <form class="input-group mt-3 mb-3"
+                                              name="newCatForm"
+                                              role="form"
+                                              [formGroup]="addForm"
+                                              (ngSubmit)="onSubmit()">
+                                            <input type="text"
+                                                   class="form-control"
+                                                   placeholder="Saisir une catégorie"
+                                                   required="required"
+                                                   formControlName="name">
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-primary"><i class="far fa-check-circle"></i></button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-auto">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Liste des catégories
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="input-group mt-3 mb-3">
+                                            <div class="input-group-prepend">
+                                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
+                                                    Sélection
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" *ngFor="let category of categories; index as i" id="{{i}}" (click)="clickSelect(i)" style="cursor: pointer;">
+                                                        {{category.name}}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <input type="text"
+                                                   id="{{selectedCategory}}"
+                                                   class="form-control"
+                                                   placeholder="Sélectionner une catégorie"
+                                                   (keyup)="onUpdate($event)"
+                                                   [value]="selectedCategory != -1 ? categories[selectedCategory].name : ''">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-danger"
+                                                        type="submit"
+                                                        [disabled]="btnDelete"
+                                                        (click)="onDelete()">
+                                                    <i class="fa fa-times-circle"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,110 @@
+<div class="d-flex" id="wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card mx-auto shadow" style="margin-top: 15px;">
+                    <div class="card-header text-center">
+                        <h4>Ajouter un nouveau produit</h4>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label for="pName">
+                                        <small class="text-muted"><i>Nom du produit</i></small>
+                                    </label>
+                                    <input type="text" class="form-control" id="pName" placeholder="Nom du produit"
+                                           required>
+                                    <hr>
+                                    <label for="pDesc">
+                                        <small class="text-muted">Description du produit</small>
+                                    </label>
+                                    <textarea class="form-control" id="pDesc" placeholder="Description du produit"
+                                              required></textarea>
+                                    <hr>
+                                    <label for="pRecipe">
+                                        <small class="text-muted">Recette du produit</small>
+                                    </label>
+                                    <textarea class="form-control" id="pRecipe"
+                                              placeholder="Recette du produit"></textarea>
+                                    <hr>
+                                    <label for="pPrice">
+                                        <small class="text-muted">Prix du produit hors taxe</small>
+                                    </label>
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="pPrice"
+                                               class="form-control"
+                                               placeholder="Prix du produit hors taxe"
+                                               floatFilter>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">€ HT</span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <label for="pTax">
+                                        <small class="text-muted">Taxe du produit</small>
+                                    </label>
+                                    <div class="input-group mb-3">
+                                        <input type="text"
+                                               id="pTax"
+                                               class="form-control"
+                                               placeholder="Taxe du produit"
+                                               floatFilter>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-sm-7">
+                                            <label for="pCat">
+                                                <small class="text-muted"><i>Nom de la catégorie</i></small>
+                                            </label>
+                                            <select id="pCat" class="custom-select">
+                                                <option selected disabled>Sélectionner</option>
+                                                <option *ngFor="let cat of categories" [value]="cat.name">{{cat.name}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-5 text-right">
+                                            <div class="custom-control custom-switch">
+                                                <label for="pAvailable" style="margin-right: 26px;">
+                                                    <small class="text-muted"><i>Etat du produit</i></small>
+                                                </label>
+                                                <br>
+                                                <input type="checkbox"
+                                                       data-toggle="toggle"
+                                                       data-onstyle="success"
+                                                       data-style="slow"
+                                                       id="pAvailable"
+                                                       data-on="<i class='fas fa-check-circle' style='margin-right:6px;'></i> Activé"
+                                                       data-off="<i class='fas fa-minus-circle' style='margin-right:6px;'></i> Désactivé">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="custom-file">
+                                        <label for="pImg" class="custom-file-label text-muted">Photo du produit</label>
+                                        <input type="file"
+                                               class="custom-file-input"
+                                               id="pImg"
+                                               accept="image/jpeg, image/png"
+                                               (change)="onFileSelected($event)">
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <img class="img-fluid" [src]="imgSrc || 'http://cm3inc.com/wp-content/uploads/2016/08/npa2.jpg'" alt="Image preview">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="text-center">
+                                <button class="btn btn-primary" type="submit" [disabled]="submit">Enregistrer le nouveau produit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

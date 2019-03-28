@@ -14,8 +14,7 @@ export class FileService {
 
         return this.http
             .get(
-                "http://localhost:8080/file/" + fileName,
+                "http://localhost:8080/file/" + btoa(fileName),
                 {responseType: "blob"});
     }
-
 }

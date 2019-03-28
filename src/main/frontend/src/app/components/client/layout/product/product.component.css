@@ -32,7 +32,7 @@
 
 .desc {
     width: calc(100% - 60px);
-
+    padding: 2%;
 }
 
 .dashed {
@@ -49,15 +49,34 @@
     font-size: 20px;
     width: 60px;
 }
+.tax-info {
+    color: #fac564;
+    font-size: 9px;
+    padding: 0;
+    font-style: italic;
+}
 
-
-
-.img {
+.img-product img {
     width: 60px;
     height: 60px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
+}
+.product-description {
+    font-size: 14px;
+    padding:2%;
+}
+
+.btn-order {
+    background-color: transparent;
+    border-color: white;
+    color: white;
+}
+.btn-order:hover {
+    background-color: #df9307;
+    border-color: black;
+    color: black;
 }
 
 p.flip::before {

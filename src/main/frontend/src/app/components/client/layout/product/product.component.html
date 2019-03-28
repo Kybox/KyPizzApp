@@ -10,29 +10,36 @@
             <p class="mt-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
         </div>
     </div>
-    <div class="row product-block">
-        <div class="product-content" *ngFor="let product of productList">
-            <div class="row" style="padding: 2%;">
-                <div class="img" [ngStyle]="{'background-image': 'url(http://via.placeholder.com/60)'}"></div>
-                <div class="desc col-auto">
-                    <div class="d-flex justify-content-between" style="height: 30px;">
-                        <div class="">
-                            <h3><span>{{product.name}}</span></h3>
-                        </div>
-                        <div class="flex-grow-1 dashed">
-
-                        </div>
-                        <div class="">
-                            <span class="price">{{product.price + ' €'}}</span>
-                        </div>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" *ngFor="let product of productList; index as i" style="padding: 2%;">
+                <div class="row" style="padding: 2%;">
+                    <div class="img-product">
+                        <img [src]="backgroundList[i]" alt="image-new">
                     </div>
-                    <div class="row">
-                        <p>{{product.description}}</p>
+                    <div class="desc col-auto">
+                        <div class="d-flex justify-content-between">
+                            <div class="">
+                                <h3><span>{{product.name}}</span></h3>
+                            </div>
+                            <div class="flex-grow-1 dashed"></div>
+                            <div>
+                                <span class="price">{{product.price + ' €'}}</span>
+                                <small class="tax-info"> TTC</small>
+                            </div>
+                        </div>
+                        <div class="row product-description">
+                            <div class="col">
+                                <p>{{product.description}}</p>
+                            </div>
+
+                            <div class="float-right" style="margin-right: 10px;">
+                                <a href="#" class="btn btn-order">Commander</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

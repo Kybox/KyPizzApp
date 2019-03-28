@@ -4,8 +4,7 @@ import {CategoryService} from "../../../../services/category/category.service";
 import {ICategory} from "../../../../entity/category.model";
 import {IProduct} from "../../../../entity/product.model";
 import {ProductService} from "../../../../services/product/product.service";
-
-
+import {FileService} from "../../../../services/file/file.service";
 
 @Component({
     selector: 'app-product',
@@ -15,19 +14,17 @@ import {ProductService} from "../../../../services/product/product.service";
 export class ProductComponent implements OnInit {
 
     public productList: IProduct[];
-
     private category:ICategory;
-
+    public backgroundList = [];
 
     constructor(private route: ActivatedRoute,
                 private categoryService: CategoryService,
-                private productService: ProductService) {
+                private productService: ProductService,
+                private fileService:FileService) {
 
         let id = atob(this.route.snapshot.params.id);
 
         console.log("id : " + id);
-
-
 
         categoryService.findById(id).subscribe(
             resp => this.category = resp.body,
@@ -46,8 +43,27 @@ export class ProductComponent implements OnInit {
 
         this.productService.findByCategory(category).subscribe(
             resp => this.productList = resp.body,
-            error => console.log(error)
+            error => console.log(error),
+            () => {
+                for(let i:number = 0; i < this.productList.length; i++)
+                    this.getBackgroundList(i);
+            }
         );
     }
 
+    getBackgroundList(productIdx:number) {
+
+        this.fileService
+            .downloadFile(this.productList[productIdx].img)
+            .subscribe(
+                resp => {
+                    let reader:FileReader = new FileReader();
+                    reader
+                        .addEventListener(
+                            "load",
+                            () => this.backgroundList[productIdx] = reader.result.toString(),
+                            false);
+                    reader.readAsDataURL(resp);
+                });
+    }
 }

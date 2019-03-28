@@ -126,7 +126,7 @@ export class ProductComponent implements OnInit {
             }
             if(key === "img") {
                 this.fileService
-                    .downloadFile(btoa(obj[key]))
+                    .downloadFile(obj[key])
                     .subscribe(resp => {
 
                         let reader:FileReader = new FileReader();

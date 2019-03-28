@@ -1,4 +1,4 @@
-package fr.kybox.kypizzapp.controller;
+package fr.kybox.kypizzapp.controller.admin;
 
 import fr.kybox.kypizzapp.model.Category;
 import fr.kybox.kypizzapp.service.CategoryService;
@@ -13,13 +13,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
-public class CategoryController {
+public class AdminCategoryController {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private CategoryService categoryService;
 
-    public CategoryController(CategoryService categoryService) {
+    public AdminCategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 

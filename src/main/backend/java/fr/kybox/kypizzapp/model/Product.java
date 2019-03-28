@@ -1,5 +1,6 @@
 package fr.kybox.kypizzapp.model;
 
+import com.mongodb.gridfs.GridFSDBFile;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -31,16 +32,23 @@ public class Product {
     @NotNull
     private Boolean available;
 
+    @NotNull
     private Double price;
+
+    @NotNull
     private Double tax;
 
     @DBRef
     @NotNull
     private Category category;
 
+    @NotNull
     private LocalDateTime creationDate;
 
+    @NotNull
     private String img;
+
+    private GridFSDBFile file;
 
     public String getId() {
         return id;
@@ -128,6 +136,14 @@ public class Product {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public GridFSDBFile getFile() {
+        return file;
+    }
+
+    public void setFile(GridFSDBFile file) {
+        this.file = file;
     }
 
     @Override

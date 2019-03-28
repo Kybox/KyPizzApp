@@ -1,0 +1,21 @@
+ul {
+    list-style-type: none;
+}
+.admin {
+    background: url(../../../assets/images/bg_4.jpg) no-repeat fixed;
+    -webkit-background-size: cover;
+    background-size: cover;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    height: 100%;
+    flex-grow: 1;
+}
+.admin-content {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    flex-grow: 2;
+    margin-top:20px;
+}

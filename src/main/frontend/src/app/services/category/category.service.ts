@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {createRequestOption} from "../../../../shared/util/request-util";
-import {ICategory} from "../../../../entity/category.model";
+import {observable, Observable} from "rxjs";
+import {createRequestOption} from "../../shared/util/request-util";
+import {ICategory} from "../../entity/category.model";
 
 type BooleanResponseType = HttpResponse<Boolean>;
 type EntityResponseType = HttpResponse<ICategory>;
@@ -40,6 +40,13 @@ export class CategoryService {
     delete(id:string):Observable<BooleanResponseType> {
         return this.http
             .delete<any>("http://localhost:8080/admin/category/" + id,
+                {observe: "response"});
+    }
+
+    findById(id:string):Observable<HttpResponse<ICategory>> {
+        return this.http
+            .get<ICategory>(
+                "http://localhost:8080/client/category/" + id,
                 {observe: "response"});
     }
 }

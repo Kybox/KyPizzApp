@@ -1,0 +1,107 @@
+.home {
+    background: url(../../../../../assets/images/bg_4.jpg) no-repeat fixed;
+    -webkit-background-size: cover;
+    background-size: cover;
+    font-family: "Poppins", Arial, sans-serif;
+}
+
+.home-content {
+    background-image: url(../../../../../assets/images/bg_1.jpg);
+    background-size: cover;
+}
+
+.carousel {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.card {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.subheading {
+    font-family: "Nothing You Could Do";
+    font-size: 30px;
+    color: #fac564;
+}
+
+.carousel-content {
+    font-size: 18px;
+    line-height: 1.5;
+    font-weight: 300;
+    color: white;
+}
+
+.icon {
+    color: #fac564;
+    font-size: 20px;
+}
+
+/* SHOP INFORMATIONS */
+.shop-info-container {
+    display: flex;
+    flex-flow: row nowrap;
+    height: auto;
+    justify-content: space-around;
+    background-color: black;
+}
+.shop-info-sub-container {
+    display: flex;
+    justify-content: space-around;
+}
+.shop-info {
+    display: flex;
+}
+.shop-info-text {
+    font-size: 12px;
+    color: white;
+}
+
+/* SOCIAL LINKS */
+.social-container {
+    display: block;
+}
+.social-link {
+    margin-left: 10px;
+    color:white;
+    font-size: 14px;
+}
+.social-link:hover {
+    text-decoration: none;
+}
+@media screen and (max-width: 660px) {
+    .social-link {
+        display: none;
+    }
+}
+
+.restaurant-container {
+    display: flex;
+    flex-flow: row wrap;
+    height: auto;
+    justify-content: space-around;
+}
+
+.restaurant-picture {
+    flex: 2 50%;
+    background: url("../../../../../assets/images/about.jpg");
+    background-size: cover;
+}
+.restaurant-about {
+    flex: 1 50%;
+    padding: 5%;
+}
+.restaurant-about-title {
+    color: white;
+    font-family: "Josefin Sans";
+    line-height: 1.4;
+    font-size: 30px;
+    font-weight: 400;
+    position: relative;
+    text-transform: uppercase;
+}
+.restaurant-about-text {
+    color: gray;
+    font-size: 15px;
+    line-height: 1.8;
+    font-weight: 300;
+}

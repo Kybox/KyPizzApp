@@ -1,0 +1,53 @@
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {CategoryService} from "../../../../services/category/category.service";
+import {ICategory} from "../../../../entity/category.model";
+import {IProduct} from "../../../../entity/product.model";
+import {ProductService} from "../../../../services/product/product.service";
+
+
+
+@Component({
+    selector: 'app-product',
+    templateUrl: './product.component.html',
+    styleUrls: ['./product.component.css']
+})
+export class ProductComponent implements OnInit {
+
+    public productList: IProduct[];
+
+    private category:ICategory;
+
+
+    constructor(private route: ActivatedRoute,
+                private categoryService: CategoryService,
+                private productService: ProductService) {
+
+        let id = atob(this.route.snapshot.params.id);
+
+        console.log("id : " + id);
+
+
+
+        categoryService.findById(id).subscribe(
+            resp => this.category = resp.body,
+            error => console.log(error),
+            () => this.getProductList(this.category)
+        );
+    }
+
+    ngOnInit() {
+
+    }
+
+    getProductList(category: ICategory): void {
+
+        console.log("Category : " + category);
+
+        this.productService.findByCategory(category).subscribe(
+            resp => this.productList = resp.body,
+            error => console.log(error)
+        );
+    }
+
+}

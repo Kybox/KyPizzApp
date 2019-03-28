@@ -1,12 +1,13 @@
 spring:
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      authentication-database: admin
-      username: kypizzapp
-      password: kypizzapp
-      database: kypizzapp
+      uri: mongodb://kybox:kypizzapp@91.121.110.162:27000/kypizzapp
   jpa:
     hibernate:
       ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+app:
+  storage: src/main/files/

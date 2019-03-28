@@ -3,12 +3,16 @@ services:
   kypizzapp:
     image: mongo:4.0.2
     ports:
-      - "27017:27017"
+      - "27000:27017"
     restart: always
     container_name: KyPizzAppDB
     environment:
-      MONGO_INITDB_ROOT_USERNAME: kypizzapp
-      MONGO_INITDB_ROOT_PASSWORD: kypizzapp
-      MONGO_INITDB_DATABASE: kypizzapp
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_DATABASE=kypizzapp
     volumes:
-      - "/mongodb/:/data/db/"
+      - "./data/mongo/001_users.js:/docker-entrypoint-initdb.d/001_users.js:ro"
+      - "data:/data/db/"
+    command: mongod
+volumes:
+  data:

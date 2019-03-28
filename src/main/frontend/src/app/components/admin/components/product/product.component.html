@@ -1,111 +1,178 @@
-<div class="d-flex" id="wrapper">
-    <nav-admin></nav-admin>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card mx-auto shadow" style="margin-top: 15px;">
-                    <div class="card-header text-center">
-                        <h4>Ajouter un nouveau produit</h4>
+<div class="card">
+    <div class="card-header text-center">
+        <div class="d-flex align-items-center">
+            <div class=" text-left flex-fill">
+                <div *ngIf="editProduct">
+                    <button type="button" class="btn btn-light" (click)="refresh()"><i class="fas fa-plus" style="margin-right: 6px;"></i>Ajouter un produit</button>
+                    <hr>
+                </div>
+                <h2 *ngIf="editProduct">Modifier un produit</h2>
+                <h3>{{title}}</h3>
+            </div>
+            <div class="flex-fill search-block shadow">
+                <p class="shadow"><i class="fas fa-search"></i> Rechercher un produit</p>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="categoryList" hidden></label>
+                        <select id="categoryList" class="custom-select" (change)="onCategorySelected($event)">
+                            <option selected disabled value="">Catégories</option>
+                            <option *ngFor="let category of categories; index as i" [value]="i">{{category.name}}</option>
+                        </select>
                     </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <label for="pName">
-                                        <small class="text-muted"><i>Nom du produit</i></small>
-                                    </label>
-                                    <input type="text" class="form-control" id="pName" placeholder="Nom du produit"
-                                           required>
-                                    <hr>
-                                    <label for="pDesc">
-                                        <small class="text-muted">Description du produit</small>
-                                    </label>
-                                    <textarea class="form-control" id="pDesc" placeholder="Description du produit"
-                                              required></textarea>
-                                    <hr>
-                                    <label for="pRecipe">
-                                        <small class="text-muted">Recette du produit</small>
-                                    </label>
-                                    <textarea class="form-control" id="pRecipe"
-                                              placeholder="Recette du produit"></textarea>
-                                    <hr>
-                                    <label for="pPrice">
-                                        <small class="text-muted">Prix du produit hors taxe</small>
-                                    </label>
-                                    <div class="input-group mb-3">
-                                        <input type="text"
-                                               id="pPrice"
-                                               class="form-control"
-                                               placeholder="Prix du produit hors taxe"
-                                               floatFilter>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">€ HT</span>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <label for="pTax">
-                                        <small class="text-muted">Taxe du produit</small>
-                                    </label>
-                                    <div class="input-group mb-3">
-                                        <input type="text"
-                                               id="pTax"
-                                               class="form-control"
-                                               placeholder="Taxe du produit"
-                                               floatFilter>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col-sm-7">
-                                            <label for="pCat">
-                                                <small class="text-muted"><i>Nom de la catégorie</i></small>
-                                            </label>
-                                            <select id="pCat" class="custom-select">
-                                                <option selected disabled>Sélectionner</option>
-                                                <option *ngFor="let cat of categories" [value]="cat.name">{{cat.name}}</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-5 text-right">
-                                            <div class="custom-control custom-switch">
-                                                <label for="pAvailable" style="margin-right: 26px;">
-                                                    <small class="text-muted"><i>Etat du produit</i></small>
-                                                </label>
-                                                <br>
-                                                <input type="checkbox"
-                                                       data-toggle="toggle"
-                                                       data-onstyle="success"
-                                                       data-style="slow"
-                                                       id="pAvailable"
-                                                       data-on="<i class='fas fa-check-circle' style='margin-right:6px;'></i> Activé"
-                                                       data-off="<i class='fas fa-minus-circle' style='margin-right:6px;'></i> Désactivé">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="custom-file">
-                                        <label for="pImg" class="custom-file-label text-muted">Photo du produit</label>
-                                        <input type="file"
-                                               class="custom-file-input"
-                                               id="pImg"
-                                               accept="image/jpeg, image/png"
-                                               (change)="onFileSelected($event)">
-                                    </div>
-                                    <br>
-                                    <br>
-                                    <img class="img-fluid" [src]="imgSrc || 'http://cm3inc.com/wp-content/uploads/2016/08/npa2.jpg'" alt="Image preview">
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="text-center">
-                                <button class="btn btn-primary" type="submit" [disabled]="submit">Enregistrer le nouveau produit</button>
-                            </div>
-                        </form>
+                    <div class="col-sm-6">
+                        <label for="productList" hidden></label>
+                        <select id="productList" class="custom-select" (change)="onProductSelected($event)">
+                            <option selected disabled value="">Produits</option>
+                            <option *ngFor="let product of productList; index as i" [value]="i">{{product.name}}</option>
+                        </select>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="pName">
+                        <small class="text-muted"><i>Nom du produit</i></small>
+                    </label>
+                    <div *ngIf="addForm.controls['name'].errors && !addForm.controls['name'].pristine" class="alert-danger">
+                        <small class="text-muted form-error-label">* Vous devez renseigner le nom du produit</small>
+                    </div>
+                    <input id="pName"
+                           name="name"
+                           type="text"
+                           class="form-control"
+                           formControlName="name"
+                           placeholder="Nom du produit"
+                           (keyup)="onUpdate($event)"
+                           required>
+                    <hr>
+                    <label for="pDesc">
+                        <small class="text-muted">Description du produit</small>
+                    </label>
+                    <div *ngIf="addForm.controls['description'].errors && !addForm.controls['description'].pristine" class="alert-danger">
+                        <small class="text-muted form-error-label">* Vous devez renseigner une description du produit</small>
+                    </div>
+                    <textarea id="pDesc"
+                              name="description"
+                              class="form-control"
+                              formControlName="description"
+                              placeholder="Description du produit"
+                              (keyup)="onUpdate($event)"
+                              required>
+                                    </textarea>
+                    <hr>
+                    <label for="pRecipe">
+                        <small class="text-muted">Recette du produit</small>
+                    </label>
+                    <textarea id="pRecipe"
+                              name="recipe"
+                              class="form-control"
+                              formControlName="recipe"
+                              placeholder="Recette du produit"
+                              (keyup)="onUpdate($event)">
+                                    </textarea>
+                    <hr>
+                    <div class="d-flex">
+                        <div class="flex-fill" style="margin-right: 6px;">
+                            <label for="pPrice">
+                                <small class="text-muted">Prix du produit hors taxe</small>
+                            </label>
+                            <div *ngIf="addForm.controls['price'].errors && !addForm.controls['price'].pristine" class="alert-danger">
+                                <small class="text-muted form-error-label">* Vous devez renseigner le prix HT du produit</small>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input id="pPrice"
+                                       type="text"
+                                       name="price"
+                                       class="form-control"
+                                       formControlName="price"
+                                       placeholder="Prix du produit hors taxe"
+                                       (keyup)="onUpdate($event)"
+                                       floatFilter>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">€ HT</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-fill" style="margin-left: 6px">
+                            <label for="pTax">
+                                <small class="text-muted">Taxe du produit</small>
+                            </label>
+                            <div *ngIf="addForm.controls['tax'].errors && !addForm.controls['tax'].pristine" class="alert-danger">
+                                <small class="text-muted form-error-label">* Vous devez renseigner pourcentage de la taxe applicable au produit</small>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input id="pTax"
+                                       name="tax"
+                                       type="text"
+                                       class="form-control"
+                                       formControlName="tax"
+                                       placeholder="Taxe du produit"
+                                       (keyup)="onUpdate($event)"
+                                       floatFilter>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="text-center">
+                        <button
+                            class="btn btn-primary"
+                            *ngIf="!editProduct"
+                            [disabled]="addForm.invalid">
+                            Enregistrer le nouveau produit
+                        </button>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <label for="pCat">
+                                <small class="text-muted"><i>Nom de la catégorie</i></small>
+                            </label>
+                            <select id="pCat" class="custom-select" formControlName="category">
+                                <option selected disabled value="">Sélectionner</option>
+                                <option *ngFor="let cat of categories; index as i" [value]="i">{{cat.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <small class="text-muted"><i>{{availableLabel}}</i></small>
+                            <br>
+                            <label class="switch" style="margin-top: 8px;">
+                                <input type="checkbox"
+                                       name="available"
+                                       formControlName="available"
+                                       checked (change)="onAvailableChange($event); onUpdate($event);">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="custom-file">
+                        <div *ngIf="addForm.controls['img'].errors && !addForm.controls['img'].pristine" class="alert-danger">
+                            <small class="text-muted form-error-label">* Vous devez sélectionner une photo du produit</small>
+                        </div>
+                        <label for="pImg" id="imgLabel" class="custom-file-label text-muted">Photo du produit</label>
+                        <input type="file"
+                               class="custom-file-input"
+                               id="pImg"
+                               accept="image/jpeg, image/png"
+                               (change)="onFileSelected($event)"
+                               formControlName="img">
+                    </div>
+                    <div class="text-center" *ngIf="progress != ''">
+                        <small class="text-muted">{{progress}}</small>
+                    </div>
+                    <br>
+                    <br>
+                    <img class="img-fluid" [src]="imgSrc || 'http://cm3inc.com/wp-content/uploads/2016/08/npa2.jpg'" alt="Image preview">
+                </div>
+            </div>
+        </form>
     </div>
 </div>

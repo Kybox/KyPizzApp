@@ -48,4 +48,10 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.deleteById(id);
         return !categoryRepository.existsById(id);
     }
+
+    @Override
+    public Optional<Category> findById(String id) {
+
+        return categoryRepository.findById(id);
+    }
 }

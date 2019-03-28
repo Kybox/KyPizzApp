@@ -1,4 +1,4 @@
-package fr.kybox.kypizzapp.model;
+package fr.kybox.kypizzapp.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.kybox.kypizzapp.config.Constants;
@@ -12,10 +12,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Document
-public class User implements Serializable {
+public class RegistredUser implements Serializable {
 
     private final static long serialVersionUID = 1L;
 
@@ -52,8 +54,8 @@ public class User implements Serializable {
     @Field("image_url")
     private String imageUrl;
 
-    //@JsonIgnore
-    //private Set<AuthorityGranter> authorities = new HashSet<>();
+    @JsonIgnore
+    private Set<Authority> authorities = new HashSet<>();
 
     public String getId() {
         return id;
@@ -119,20 +121,20 @@ public class User implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    /*public Set<AuthorityGranter> getAuthorities() {
+    public Set<Authority> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(Set<AuthorityGranter> authorities) {
+    public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
-    */
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
+        RegistredUser user = (RegistredUser) o;
         return !(user.getId() == null || getId() == null) && Objects.equals(getId(), user.getId());
     }
 

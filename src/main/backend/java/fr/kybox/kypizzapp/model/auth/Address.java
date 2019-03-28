@@ -1,4 +1,4 @@
-package fr.kybox.kypizzapp.model;
+package fr.kybox.kypizzapp.model.auth;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

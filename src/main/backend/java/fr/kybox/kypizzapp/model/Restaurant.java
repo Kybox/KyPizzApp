@@ -1,7 +1,7 @@
 package fr.kybox.kypizzapp.model;
 
 import fr.kybox.kypizzapp.model.auth.Address;
-import fr.kybox.kypizzapp.model.auth.RegistredUser;
+import fr.kybox.kypizzapp.model.auth.RegisteredUser;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -28,7 +28,7 @@ public class Restaurant {
     private Map<String, String> openingTime;
 
     @DBRef
-    private RegistredUser manager;
+    private RegisteredUser manager;
 
     public String getId() {
         return id;
@@ -78,11 +78,11 @@ public class Restaurant {
         this.openingTime = openingTime;
     }
 
-    public RegistredUser getManager() {
+    public RegisteredUser getManager() {
         return manager;
     }
 
-    public void setManager(RegistredUser manager) {
+    public void setManager(RegisteredUser manager) {
         this.manager = manager;
     }
 

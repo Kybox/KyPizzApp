@@ -1,6 +1,6 @@
 package fr.kybox.kypizzapp.model;
 
-import fr.kybox.kypizzapp.model.auth.RegistredUser;
+import fr.kybox.kypizzapp.model.auth.RegisteredUser;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,7 +19,7 @@ public class Order {
     private Restaurant restaurant;
 
     @DBRef
-    private RegistredUser customer;
+    private RegisteredUser customer;
 
     @NotNull
     private OrderStatus status;
@@ -49,11 +49,11 @@ public class Order {
         this.restaurant = restaurant;
     }
 
-    public RegistredUser getCustomer() {
+    public RegisteredUser getCustomer() {
         return customer;
     }
 
-    public void setCustomer(RegistredUser customer) {
+    public void setCustomer(RegisteredUser customer) {
         this.customer = customer;
     }
 

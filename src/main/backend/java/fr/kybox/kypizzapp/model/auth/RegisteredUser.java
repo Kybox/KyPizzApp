@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Document
-public class RegistredUser implements Serializable {
+public class RegisteredUser implements Serializable {
 
     private final static long serialVersionUID = 1L;
 
@@ -134,7 +134,7 @@ public class RegistredUser implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RegistredUser user = (RegistredUser) o;
+        RegisteredUser user = (RegisteredUser) o;
         return !(user.getId() == null || getId() == null) && Objects.equals(getId(), user.getId());
     }
 

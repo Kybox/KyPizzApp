@@ -38,7 +38,7 @@ public class JwtFilter extends AbstractAuthenticationProcessingFilter {
 
         String authHeader = request.getHeader(AUTH_HEADER);
 
-        if (authHeader.isEmpty() || !authHeader.startsWith(jwtProperties.getPrefix())) {
+        if (authHeader == null || authHeader.isEmpty() || !authHeader.startsWith(jwtProperties.getPrefix())) {
 
             log.warn("Authorization failed : The token is missing !");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

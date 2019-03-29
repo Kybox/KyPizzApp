@@ -4,7 +4,7 @@ import {ICategory} from "../../../../entity/category.model";
 import {Router} from "@angular/router";
 
 @Component({
-    selector: 'client-nav',
+    selector: 'ky-nav',
     templateUrl: './navigation.component.html',
     styleUrls: ['./navigation.component.css']
 })

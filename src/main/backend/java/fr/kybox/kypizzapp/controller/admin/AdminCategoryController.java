@@ -23,13 +23,6 @@ public class AdminCategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping(value = "/category", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<Category>> getAllCategories(){
-
-        log.info("Get all categories");
-        return ResponseEntity.ok(categoryService.findAllCategories());
-    }
-
     @PostMapping(value = "/category", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Category> addNewCategory(@RequestBody @Valid Category category){
 

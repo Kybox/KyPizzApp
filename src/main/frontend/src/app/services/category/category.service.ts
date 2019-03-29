@@ -19,7 +19,7 @@ export class CategoryService {
     findAll(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http
-            .get<ICategory[]>("http://localhost:8080/admin/category",
+            .get<ICategory[]>("http://localhost:8080/api/category",
                 {params: options, observe: "response"});
     }
 
@@ -46,7 +46,7 @@ export class CategoryService {
     findById(id:string):Observable<HttpResponse<ICategory>> {
         return this.http
             .get<ICategory>(
-                "http://localhost:8080/client/category/" + id,
+                "http://localhost:8080/api/category/" + id,
                 {observe: "response"});
     }
 }

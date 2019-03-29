@@ -1,3 +1,6 @@
-<client-nav></client-nav>
-<client-home *ngIf="router.url==='/'"></client-home>
-<router-outlet></router-outlet>
+<div class="main-component">
+    <ky-nav></ky-nav>
+    <ky-home *ngIf="router.url==='/'"></ky-home>
+    <router-outlet></router-outlet>
+    <ky-footer></ky-footer>
+</div>

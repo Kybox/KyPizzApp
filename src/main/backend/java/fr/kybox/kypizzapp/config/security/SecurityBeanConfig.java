@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -47,6 +48,7 @@ public class SecurityBeanConfig {
     public RequestMatcher requestMatcher() {
 
         List<RequestMatcher> requestMatcherList = new ArrayList<>();
+        requestMatcherList.add(new AntPathRequestMatcher("/admin/**"));
         return new OrRequestMatcher(requestMatcherList);
     }
 

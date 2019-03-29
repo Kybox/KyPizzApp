@@ -6,13 +6,17 @@ import {HttpClientModule} from "@angular/common/http";
 import {NavigationComponent} from './layout/navigation/navigation.component';
 import { HomeComponent } from './layout/home/home.component';
 import { ProductComponent } from './layout/product/product.component';
+import { AuthenticationComponent } from './layout/authentication/authentication.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 
 @NgModule({
     declarations: [
         NavigationComponent,
         HomeComponent,
-        ProductComponent
+        ProductComponent,
+        AuthenticationComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule,
@@ -21,7 +25,7 @@ import { ProductComponent } from './layout/product/product.component';
     ],
     providers: [],
     bootstrap: [ClientComponent],
-    exports : [NavigationComponent, HomeComponent]
+    exports : [NavigationComponent, HomeComponent, FooterComponent]
 })
 export class ClientModule {
 }

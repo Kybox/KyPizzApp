@@ -1,0 +1,24 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      uri: ENC(iTGRpaLiSuJmiW7ijt5Wz5fZiIeeFXzbMLoNdTKNa8Vvf4l3Rk25B320b8TwBkNj5haaGyNRqZklhlF3OVLTme6gKPQe60a7)
+  jpa:
+    hibernate:
+      ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+      enabled: true
+app:
+  storage: src/main/files/
+
+kypizzapp:
+  security:
+    jwt:
+      header: ENC(Er65oU6Hnb7hiCUhTiZ7LGR8ZFIrJEBs)
+      prefix: ENC(Jdp/qEIs1pplDcJILosSWA==)
+      signing-key: ENC(AskXjlmu3cl3bDUETg1zU6YXsk/eo2mQSCeKDZ9vQDpQzIgWhgGh6A==)
+      expiration: 1800

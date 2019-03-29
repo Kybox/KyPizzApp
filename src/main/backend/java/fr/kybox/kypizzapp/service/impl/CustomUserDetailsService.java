@@ -24,25 +24,25 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private final RegisteredUserRepository registredUserRepository;
+    private final RegisteredUserRepository registeredUserRepository;
 
     @Autowired
-    public CustomUserDetailsService(RegisteredUserRepository registredUserRepository) {
-        this.registredUserRepository = registredUserRepository;
+    public CustomUserDetailsService(RegisteredUserRepository registeredUserRepository) {
+        this.registeredUserRepository = registeredUserRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException {
 
         if(new EmailValidator().isValid(login, null)){
-            return registredUserRepository
+            return registeredUserRepository
                     .findOneByEmailIgnoreCase(login)
                     .map(user -> createSpringSecurityUser(login, user))
                     .orElseThrow(() -> new UsernameNotFoundException("User with this email " + login + " was not found"));
         }
 
         String lowerCaseLogin = login.toLowerCase(Locale.ENGLISH);
-        return registredUserRepository
+        return registeredUserRepository
                 .findOneByNickName(lowerCaseLogin)
                 .map(user -> createSpringSecurityUser(lowerCaseLogin, user))
                 .orElseThrow(() -> new UsernameNotFoundException("User with this nickname " + lowerCaseLogin + " was not found"));

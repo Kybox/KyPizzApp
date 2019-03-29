@@ -12,9 +12,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Document
 public class RegisteredUser implements Serializable {
@@ -32,7 +31,6 @@ public class RegisteredUser implements Serializable {
 
     @NotNull
     @JsonIgnore
-    @Size(min = 60, max = 60)
     private String password;
 
     @Size(max = 50)
@@ -54,8 +52,12 @@ public class RegisteredUser implements Serializable {
     @Field("image_url")
     private String imageUrl;
 
+    @NotNull
+    @Field("create_date")
+    private LocalDateTime creationDate;
+
     @JsonIgnore
-    private Set<Authority> authorities = new HashSet<>();
+    private List<Authority> authorities = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -121,12 +123,20 @@ public class RegisteredUser implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public Set<Authority> getAuthorities() {
+    public List<Authority> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(Set<Authority> authorities) {
+    public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     @Override

@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ClientComponent} from "./client.component";
-import {ProductComponent} from "./layout/product/product.component";
-import {AuthenticationComponent} from "./layout/authentication/authentication.component";
+import {ProductComponent} from "./components/product/product.component";
+import {AuthenticationComponent} from "./components/authentication/authentication.component";
 
 const routes: Routes = [
     {

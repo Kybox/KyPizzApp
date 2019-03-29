@@ -1,0 +1,142 @@
+<div class="child-component">
+    <div class="d-flex p-2 m-2 justify-content-center">
+        <div class="col-md-7 text-center">
+            <h2 class="mb-4 title">Sign in to take advantage of our services</h2>
+            <p class="flip">
+                <span class="deg1"></span>
+                <span class="deg2"></span>
+                <span class="deg3"></span>
+            </p>
+            <p class="mt-5">
+                You will find on the left the module for the creation of a new account.
+                <br>While on the right, you will be able to login and access your user account.
+            </p>
+            <br>
+        </div>
+    </div>
+    <br>
+    <section class="d-flex text-center justify-content-around flex-wrap">
+        <div class="col-11 col-sm-11 col-md-11 col-lg-5 p-2 auth-box">
+            <div class="auth-box-inner p-2">
+                <h3>Sign up</h3>
+                <p>The process of creating a new user account will only take a few seconds.</p>
+                <form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
+                    <div class="d-flex text-center justify-content-around flex-wrap">
+                        <div class="col-12 col-sm-12 col-md-5 p-2">
+                            <label for="rNickname">
+                                <small>Nickname (for login)</small>
+                            </label>
+                            <input type="text"
+                                   id="rNickname"
+                                   class="form-control"
+                                   formControlName="nickName"
+                                   [class.is-valid]="registerForm.get('nickName').valid"
+                                   required>
+                            <br>
+                            <label for="rFirstname">
+                                <small>First name</small>
+                            </label>
+                            <input type="text"
+                                   id="rFirstname"
+                                   class="form-control"
+                                   formControlName="firstName"
+                                   [class.is-valid]="registerForm.get('firstName').valid"
+                                   required>
+                            <br>
+                            <label for="rPassword">
+                                <small>Password</small>
+                            </label>
+                            <input id="rPassword"
+                                   type="password"
+                                   class="form-control"
+                                   formControlName="password1"
+                                   (keyup)="checkPassword()"
+                                   [class.is-valid]="registerForm.get('password1').valid"
+                                   required>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-5 p-2">
+                            <label for="rEmail">
+                                <small>E-mail</small>
+                            </label>
+                            <input type="email"
+                                   id="rEmail"
+                                   class="form-control"
+                                   formControlName="email"
+                                   [class.is-valid]="registerForm.get('email').valid"
+                                   required>
+                            <br>
+                            <label for="rLastname">
+                                <small>Last name</small>
+                            </label>
+                            <input type="text"
+                                   id="rLastname"
+                                   class="form-control"
+                                   formControlName="lastName"
+                                   [class.is-valid]="registerForm.get('lastName').valid"
+                                   required>
+                            <br>
+                            <label for="rPassword2">
+                                <small>Retype Password</small>
+                            </label>
+                            <input id="rPassword2"
+                                   type="password"
+                                   class="form-control"
+                                   formControlName="password2"
+                                   (keyup)="checkPassword()"
+                                   [class.is-valid]="registerPassMatch"
+                                   [class.is-invalid]="(!registerPassMatch && registerForm.get('password2').valid)"
+                                   required>
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit"
+                            class="btn btn-form m-2"
+                            [disabled]="registerForm.invalid || !registerPassMatch">
+                        Register
+                    </button>
+                    <br>
+                </form>
+            </div>
+        </div>
+        <div class="col-11 col-sm-11 col-md-11 col-lg-5 p-2 auth-box">
+            <div class="auth-box-inner p-2">
+                <h3>Sign in</h3>
+                <p>Enter your login credentials to access your user account</p>
+                <form class="p-3" name="loginForm" [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+                    <div class="form-group has-error has-feedback">
+                        <label for="login">
+                            <small>Login</small>
+                        </label>
+                        <input
+                            id="login"
+                            type="text"
+                            class="form-control"
+                            formControlName="login"
+                            [class.is-valid]="loginForm.get('login').valid"
+                            required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="pass">
+                            <small>Password</small>
+                        </label>
+                        <input id="pass"
+                               type="password"
+                               class="form-control"
+                               [class.is-valid]="loginForm.get('password').valid"
+                               formControlName="password"
+                               required>
+                    </div>
+                    <br>
+                    <button type="submit"
+                            class="btn btn-form m-2"
+                            [disabled]="!loginForm.valid">
+                        Login
+                    </button>
+                    <br>
+                </form>
+            </div>
+        </div>
+    </section>
+    <br>
+</div>

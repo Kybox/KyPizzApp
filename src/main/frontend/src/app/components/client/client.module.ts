@@ -3,11 +3,12 @@ import {BrowserModule} from "@angular/platform-browser";
 import {ClientComponent} from "./client.component";
 import {ClientRoutingModule} from "./client-routing.module";
 import {HttpClientModule} from "@angular/common/http";
-import {NavigationComponent} from './layout/navigation/navigation.component';
-import { HomeComponent } from './layout/home/home.component';
-import { ProductComponent } from './layout/product/product.component';
-import { AuthenticationComponent } from './layout/authentication/authentication.component';
-import { FooterComponent } from './layout/footer/footer.component';
+import {NavigationComponent} from './components/navigation/navigation.component';
+import { HomeComponent } from './components/home/home.component';
+import { ProductComponent } from './components/product/product.component';
+import { AuthenticationComponent } from './components/authentication/authentication.component';
+import { FooterComponent } from './components/footer/footer.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { FooterComponent } from './layout/footer/footer.component';
     imports: [
         BrowserModule,
         ClientRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        ReactiveFormsModule
     ],
     providers: [],
     bootstrap: [ClientComponent],

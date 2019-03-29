@@ -26,15 +26,13 @@ export class CategoryService {
     create(category:ICategory):Observable<EntityResponseType> {
         return this.http
             .post<ICategory>("http://localhost:8080/admin/category",
-                category,
-                { observe: "response"});
+                category, { observe: "response"});
     }
 
     update(category:ICategory):Observable<EntityResponseType> {
         return this.http
             .put<ICategory>("http://localhost:8080/admin/category",
-                category,
-                {observe: "response"});
+                category, {observe: "response"});
     }
 
     delete(id:string):Observable<BooleanResponseType> {

@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
-  styleUrls: ['./client.component.css', './layout/css/animate.css']
+  styleUrls: ['./client.component.css', './components/css/animate.css']
 })
 export class ClientComponent implements OnInit {
 

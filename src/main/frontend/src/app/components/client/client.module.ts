@@ -9,6 +9,7 @@ import { ProductComponent } from './components/product/product.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { FooterComponent } from './components/footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { AccountComponent } from './components/account/account.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         HomeComponent,
         ProductComponent,
         AuthenticationComponent,
-        FooterComponent
+        FooterComponent,
+        AccountComponent
     ],
     imports: [
         BrowserModule,

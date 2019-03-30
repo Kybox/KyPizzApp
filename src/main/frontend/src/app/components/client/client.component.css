@@ -119,3 +119,14 @@ p.flip::after {
     transform: rotate(135deg);
     margin: 0 auto;
 }
+
+.under-nav{
+    height: 96px;
+    background-color: #df9307;
+}
+
+@media (max-width: 991px){
+    .under-nav{
+        height: 10px;
+    }
+}

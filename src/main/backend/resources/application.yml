@@ -22,3 +22,4 @@ kypizzapp:
       prefix: ENC(Jdp/qEIs1pplDcJILosSWA==)
       signing-key: ENC(AskXjlmu3cl3bDUETg1zU6YXsk/eo2mQSCeKDZ9vQDpQzIgWhgGh6A==)
       expiration: 1800
+      extended: 10800

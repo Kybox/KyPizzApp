@@ -26,7 +26,10 @@ public class RegisterForm {
     private String email;
 
     @NotNull
-    private String password;
+    private String password1;
+
+    @NotNull
+    private String password2;
 
     public RegisterForm() {
     }
@@ -63,11 +66,31 @@ public class RegisterForm {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPassword1() {
+        return password1;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword1(String password1) {
+        this.password1 = password1;
+    }
+
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
+
+    @Override
+    public String toString() {
+        return "RegisterForm{" +
+                "nickName='" + nickName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password1='" + password1 + '\'' +
+                ", password2='" + password2 + '\'' +
+                '}';
     }
 }

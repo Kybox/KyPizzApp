@@ -28,4 +28,4 @@
 .vscode/
 /src/main/docker/volumes/
 /files/
-/src/main/backend/resources/application.yml
+/src/main/files/

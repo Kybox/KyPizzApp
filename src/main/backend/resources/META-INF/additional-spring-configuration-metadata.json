@@ -19,5 +19,10 @@
       "name": "kypizzapp.security.jwt.expiration",
       "type": "java.lang.Long",
       "description": "Description for kypizzapp.security.jwt.expiration."
+    },
+    {
+      "name": "kypizzapp.security.jwt.extended",
+      "type": "java.lang.Long",
+      "description": "Description for kypizzapp.security.jwt.extended."
     }
   ] }

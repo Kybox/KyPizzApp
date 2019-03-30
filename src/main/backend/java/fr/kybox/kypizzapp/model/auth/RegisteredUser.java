@@ -1,9 +1,12 @@
 package fr.kybox.kypizzapp.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.kybox.kypizzapp.config.Constants;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -15,7 +18,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Document
+@Document(collection = "user")
 public class RegisteredUser implements Serializable {
 
     private final static long serialVersionUID = 1L;
@@ -25,6 +28,7 @@ public class RegisteredUser implements Serializable {
 
     @NotNull
     @Indexed
+    @UniqueElements
     @Size(min = 1, max = 50)
     @Pattern(regexp = Constants.NICKNAME_REGEXP)
     private String nickName;
@@ -43,6 +47,7 @@ public class RegisteredUser implements Serializable {
 
     @Email
     @Indexed
+    @UniqueElements
     @Size(min = 5, max = 255)
     private String email;
 
@@ -56,7 +61,7 @@ public class RegisteredUser implements Serializable {
     @Field("create_date")
     private LocalDateTime creationDate;
 
-    @JsonIgnore
+    @DBRef
     private List<Authority> authorities = new ArrayList<>();
 
     public String getId() {
@@ -151,5 +156,21 @@ public class RegisteredUser implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        return "RegisteredUser{" +
+                "id='" + id + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", activated=" + activated +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", creationDate=" + creationDate +
+                ", authorities=" + authorities +
+                '}';
     }
 }

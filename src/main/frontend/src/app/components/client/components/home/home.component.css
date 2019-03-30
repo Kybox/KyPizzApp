@@ -8,6 +8,7 @@
 .home-content {
     background-image: url(../../../../../assets/images/bg_1.jpg);
     background-size: cover;
+    /* height: 100vh */
 }
 
 .carousel {
@@ -29,6 +30,9 @@
     line-height: 1.5;
     font-weight: 300;
     color: white;
+}
+.carousel-indicators{
+    z-index: 1;
 }
 
 .icon {

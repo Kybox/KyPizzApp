@@ -1,5 +1,5 @@
 <div class="child-component">
-    <div class="d-flex p-2 m-2 justify-content-center">
+    <div class="d-flex p-2 m-4 justify-content-center">
         <div class="col-md-7 text-center">
             <h2 class="mb-4 title">Sign in to take advantage of our services</h2>
             <p class="flip">
@@ -17,9 +17,10 @@
     <br>
     <section class="d-flex text-center justify-content-around flex-wrap">
         <div class="col-11 col-sm-11 col-md-11 col-lg-5 p-2 auth-box">
-            <div class="auth-box-inner p-2">
+            <div class="auth-box-inner p-4">
                 <h3>Sign up</h3>
                 <p>The process of creating a new user account will only take a few seconds.</p>
+                <br>
                 <form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
                     <div class="d-flex text-center justify-content-around flex-wrap">
                         <div class="col-12 col-sm-12 col-md-5 p-2">
@@ -30,6 +31,7 @@
                                    id="rNickname"
                                    class="form-control"
                                    formControlName="nickName"
+                                   (keyup)="checkAlert()"
                                    [class.is-valid]="registerForm.get('nickName').valid"
                                    required>
                             <br>
@@ -62,6 +64,7 @@
                                    id="rEmail"
                                    class="form-control"
                                    formControlName="email"
+                                   (keyup)="checkAlert()"
                                    [class.is-valid]="registerForm.get('email').valid"
                                    required>
                             <br>
@@ -88,6 +91,13 @@
                                    required>
                         </div>
                     </div>
+                    <div *ngIf="hasSignUpError">
+                        <br>
+                        <div class="alert alert-danger" role="alert">
+                            {{errorMessage}}
+                        </div>
+                    </div>
+                    <br *ngIf="!hasSignUpError">
                     <br>
                     <button type="submit"
                             class="btn btn-form m-2"
@@ -99,13 +109,15 @@
             </div>
         </div>
         <div class="col-11 col-sm-11 col-md-11 col-lg-5 p-2 auth-box">
-            <div class="auth-box-inner p-2">
+            <div class="auth-box-inner p-4">
                 <h3>Sign in</h3>
-                <p>Enter your login credentials to access your user account</p>
+                <p>Enter your login credentials to access your user account.
+                    <br>We are delighted to see you again !
+                </p>
                 <form class="p-3" name="loginForm" [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
                     <div class="form-group has-error has-feedback">
                         <label for="login">
-                            <small>Login</small>
+                            <small>Login ( nickname or e-mail )</small>
                         </label>
                         <input
                             id="login"
@@ -113,6 +125,7 @@
                             class="form-control"
                             formControlName="login"
                             [class.is-valid]="loginForm.get('login').valid"
+                            (keyup)="checkAlert()"
                             required>
                     </div>
                     <br>
@@ -125,7 +138,29 @@
                                class="form-control"
                                [class.is-valid]="loginForm.get('password').valid"
                                formControlName="password"
+                               (keyup)="checkAlert()"
                                required>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-center">
+                        <div class="col">
+                            <label class="remember-me">
+                                <small [ngClass]="rememberClass">Remember me</small>
+                            </label>
+                            <span class="squaredFour">
+                                <input type="checkbox"
+                                       id="squaredFour"
+                                       formControlName="remember"
+                                       (change)="rememberChange($event)">
+                                <label for="squaredFour"></label>
+                            </span>
+                        </div>
+                    </div>
+                    <div *ngIf="hasSignInError">
+                        <br>
+                        <div class="alert alert-danger" role="alert">
+                            {{errorMessage}}
+                        </div>
                     </div>
                     <br>
                     <button type="submit"

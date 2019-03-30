@@ -4,6 +4,10 @@ import {Observable} from "rxjs";
 import {IProduct} from "../../entity/product.model";
 import {createRequestOption} from "../../shared/util/request-util";
 import {ICategory} from "../../entity/category.model";
+import {AppSettings} from "../../config/app.settings";
+
+type EntityResponseType = HttpResponse<IProduct>;
+type EntityArrayResponseType = HttpResponse<IProduct[]>;
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +21,7 @@ export class ProductService {
 
         const req = new HttpRequest(
             "POST",
-            "http://localhost:8080/admin/product/file",
+            AppSettings.ADMIN_API_URL + "product/file",
             file,
             {
                 reportProgress: true,
@@ -26,29 +30,28 @@ export class ProductService {
         return this.http.request(req);
     }
 
-    create(product: IProduct): Observable<HttpResponse<IProduct>> {
+    create(product: IProduct): Observable<EntityResponseType> {
         return this.http
-            .post("http://localhost:8080/admin/product", product,
+            .post<IProduct>(AppSettings.ADMIN_API_URL + "product", product,
                 {observe: "response"});
     }
 
-    findAll(req?: any): Observable<HttpResponse<IProduct[]>> {
+    findAll(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http
-            .get<ICategory[]>("http://localhost:8080/admin/product",
+            .get<IProduct[]>(AppSettings.ADMIN_API_URL + "product",
                 {params: options, observe: "response"});
     }
 
-    update(product:IProduct):Observable<HttpResponse<IProduct>> {
+    update(product:IProduct):Observable<EntityResponseType> {
         return this.http
-            .put<IProduct>("http://localhost:8080/admin/product", product,
+            .put<IProduct>(AppSettings.ADMIN_API_URL + "product", product,
                 {observe: "response"});
     }
 
-    findByCategory(category:ICategory):Observable<HttpResponse<IProduct[]>>{
-
+    findByCategory(category:ICategory):Observable<EntityArrayResponseType>{
         return this.http
-            .post<IProduct[]>("http://localhost:8080/client/products/by/category", category,
+            .post<IProduct[]>(AppSettings.PUBLIC_API_URL + "products/by/category", category,
                 {observe: "response"});
     }
 }

@@ -1,6 +1,7 @@
 <div class="main-component">
     <ky-nav></ky-nav>
+    <div class="under-nav"></div>
     <ky-home *ngIf="router.url==='/'"></ky-home>
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="componentAdded($event)"></router-outlet>
     <ky-footer></ky-footer>
 </div>

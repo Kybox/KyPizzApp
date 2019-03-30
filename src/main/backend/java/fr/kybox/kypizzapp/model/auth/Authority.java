@@ -1,6 +1,8 @@
 package fr.kybox.kypizzapp.model.auth;
 
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
@@ -14,9 +16,21 @@ public class Authority implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    private String id;
+
     @NotNull
+    @Indexed
+    @UniqueElements
     @Size(max = 50)
     private String name;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -42,7 +56,8 @@ public class Authority implements Serializable {
     @Override
     public String toString() {
         return "Authority{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

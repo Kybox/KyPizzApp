@@ -36,14 +36,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         if(new EmailValidator().isValid(login, null)){
             return registeredUserRepository
-                    .findOneByEmailIgnoreCase(login)
+                    .findFirstByEmail(login)
                     .map(user -> createSpringSecurityUser(login, user))
                     .orElseThrow(() -> new UsernameNotFoundException("User with this email " + login + " was not found"));
         }
 
         String lowerCaseLogin = login.toLowerCase(Locale.ENGLISH);
         return registeredUserRepository
-                .findOneByNickName(lowerCaseLogin)
+                .findFirstByNickNameIgnoreCase(lowerCaseLogin)
                 .map(user -> createSpringSecurityUser(lowerCaseLogin, user))
                 .orElseThrow(() -> new UsernameNotFoundException("User with this nickname " + lowerCaseLogin + " was not found"));
     }

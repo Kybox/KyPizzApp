@@ -1,5 +1,5 @@
 <!-- START nav -->
-<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
         <a class="navbar-brand" href="#">
             <span class="flaticon-pizza-1 mr-1"></span>
@@ -18,7 +18,12 @@
                 </li>
                 <li class="nav-item"><a routerLink="/admin" class="nav-link">Contact</a></li>
                 <li class="nav-item"><a routerLink="/admin" class="nav-link">Admin</a></li>
-                <li class="nav-item"><a routerLink="/auth/login" class="nav-link">Connexion</a></li>
+                <li class="nav-item" *ngIf="!authenticated">
+                    <a routerLink="/auth/login" class="nav-link">Connexion</a>
+                </li>
+                <li class="nav-item" *ngIf="authenticated">
+                    <a routerLink="/auth/account" class="nav-link">Mon compte</a>
+                </li>
             </ul>
         </div>
     </div>

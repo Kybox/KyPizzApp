@@ -5,9 +5,11 @@ import fr.kybox.kypizzapp.security.jwt.property.JwtProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.header.Header;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 
@@ -34,14 +36,14 @@ public class JwtFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response)
-            throws AuthenticationException {
+            throws AuthenticationException, IOException {
 
         String authHeader = request.getHeader(AUTH_HEADER);
 
         if (authHeader == null || authHeader.isEmpty() || !authHeader.startsWith(jwtProperties.getPrefix())) {
 
-            log.warn("Authorization failed : The token is missing !");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authorization failed : The token is missing !");
             return null;
         }
 

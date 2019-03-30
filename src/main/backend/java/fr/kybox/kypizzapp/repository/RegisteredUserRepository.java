@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface RegisteredUserRepository extends MongoRepository<RegisteredUser, String> {
 
-    Optional<RegisteredUser> findOneByEmailIgnoreCase(String email);
-    Optional<RegisteredUser> findOneByNickName(String nickName);
+    Optional<RegisteredUser> findFirstByEmail(String email);
+    Optional<RegisteredUser> findFirstByNickNameIgnoreCase(String nickName);
 }

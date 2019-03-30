@@ -1,4 +1,5 @@
-import {IAuthority} from "./authority.model";
+import {IAuthority} from "../authority.model";
+import {Address} from "./address.model";
 
 export interface IUser {
 
@@ -9,6 +10,7 @@ export interface IUser {
     email?:string
     password?:string;
     activated?:boolean;
+    address?:Address;
     imgUrl?:string;
     creationDate?:Date;
     authorities?:IAuthority[];

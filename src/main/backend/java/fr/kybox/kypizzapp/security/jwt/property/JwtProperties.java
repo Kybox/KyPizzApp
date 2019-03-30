@@ -9,6 +9,7 @@ public class JwtProperties {
     private String prefix;
     private String signingKey;
     private long expiration;
+    private long extended;
 
     public String getHeader() {
         return header;
@@ -40,5 +41,13 @@ public class JwtProperties {
 
     public void setExpiration(long expiration) {
         this.expiration = expiration;
+    }
+
+    public long getExtended() {
+        return extended;
+    }
+
+    public void setExtended(long extended) {
+        this.extended = extended;
     }
 }

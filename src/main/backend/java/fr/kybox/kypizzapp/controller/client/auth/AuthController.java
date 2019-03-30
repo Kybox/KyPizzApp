@@ -1,26 +1,38 @@
 package fr.kybox.kypizzapp.controller.client.auth;
 
+import fr.kybox.kypizzapp.model.auth.Authenticated;
 import fr.kybox.kypizzapp.model.auth.LoginForm;
 import fr.kybox.kypizzapp.model.auth.RegisterForm;
 import fr.kybox.kypizzapp.model.auth.RegisteredUser;
+import fr.kybox.kypizzapp.security.jwt.model.JwtToken;
+import fr.kybox.kypizzapp.security.jwt.property.JwtProperties;
 import fr.kybox.kypizzapp.service.AuthService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/shop/auth")
+@RequestMapping(value = "/api")
 public class AuthController {
 
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
+    private final JwtProperties jwtProperties;
     private final AuthService authService;
 
-    public AuthController(AuthService authService) {
+    @Autowired
+    public AuthController(AuthService authService, JwtProperties jwtProperties) {
         this.authService = authService;
+        this.jwtProperties = jwtProperties;
     }
 
     @PostMapping(value = "/register",
@@ -28,14 +40,31 @@ public class AuthController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RegisteredUser> registerUser(@RequestBody @Valid RegisterForm registerForm){
 
+        log.info(registerForm.toString());
         return ResponseEntity.ok().body(authService.registerUser(registerForm));
     }
 
     @PostMapping(value = "/login",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<RegisteredUser> loginUser(@RequestBody @Valid LoginForm loginForm) {
+    public ResponseEntity<JwtToken> loginUser(@RequestBody @Valid LoginForm loginForm) {
 
-        return ResponseEntity.ok().body(authService.loginUser(loginForm));
+        log.info(loginForm.toString());
+
+        JwtToken jwtToken = authService.loginUser(loginForm);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(jwtProperties.getHeader(),
+                jwtProperties.getPrefix() + " " + jwtToken.getToken());
+
+        return new ResponseEntity<>(jwtToken, httpHeaders, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/authenticated")
+    public ResponseEntity<Authenticated> isAuthenticated(HttpServletRequest request){
+
+        log.info("IsAuthenticated");
+        log.info("Header : " + request.getHeader(jwtProperties.getHeader()));
+        return ResponseEntity.ok(authService.isAuthenticated(request));
     }
 }

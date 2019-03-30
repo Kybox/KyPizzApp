@@ -1,3 +1,30 @@
 footer {
+    background: url("../../../../../assets/images/bg_1.jpg") no-repeat fixed;
+    background-size: cover;
+}
+.footer-top {
+    height: 10px;
     background-color: #df9307;
+}
+.footer-box {
+    background-color: black;
+    color: white;
+    padding:2%;
+    border: 2px solid #df9307;
+    height: auto;
+    -moz-box-shadow: 0px 0px 14px 2px #000000;
+    -webkit-box-shadow: 0px 0px 14px 2px #000000;
+    -o-box-shadow: 0px 0px 14px 2px #000000;
+    box-shadow: 0px 0px 14px 2px #000000;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#000000, Direction=NaN, Strength=14);
+}
+.footer-image {
+    height: 200px;
+    background-size: cover;
+    background: url("../../../../../assets/images/bg_2.jpg") no-repeat, url("../../../../../assets/images/bg_1.jpg") no-repeat fixed;
+    background-blend-mode: hard-light;
+}
+.footer-content {
+    background: url("../../../../../assets/images/bg_1.jpg") no-repeat fixed;
+    background-size: cover;
 }

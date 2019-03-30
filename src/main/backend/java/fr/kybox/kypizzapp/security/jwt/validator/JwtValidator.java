@@ -28,7 +28,9 @@ public class JwtValidator {
     public JwtUser validate(String token) {
 
         JwtUser jwtUser = null;
-        token = token.replace(jwtProperties.getPrefix() + SPACE, EMPTY);
+
+        if(token.startsWith(jwtProperties.getPrefix()))
+            token = token.replace(jwtProperties.getPrefix() + SPACE, EMPTY);
 
         try {
 

@@ -1,6 +1,9 @@
 .nav-item a {
     cursor: pointer;
 }
+.navbar {
+    z-index: 16;
+}
 
 
 .ftco-navbar-light {

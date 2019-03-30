@@ -1,8 +1,10 @@
 package fr.kybox.kypizzapp.config.security;
 
 import fr.kybox.kypizzapp.security.jwt.filter.JwtFilter;
+import fr.kybox.kypizzapp.security.jwt.handler.JwtDeniedHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,20 +24,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final JwtFilter jwtFilter;
+    private final JwtDeniedHandler jwtDeniedHandler;
 
-    public SecurityConfig(JwtFilter jwtFilter) {
+    @Autowired
+    public SecurityConfig(JwtFilter jwtFilter,
+                          JwtDeniedHandler jwtDeniedHandler) {
+
         this.jwtFilter = jwtFilter;
+        this.jwtDeniedHandler = jwtDeniedHandler;
     }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity.csrf().disable();
         httpSecurity
+                .cors()
+                .and()
+                .csrf()
+                .disable()
                 .authorizeRequests()
-                .antMatchers("/api").permitAll()
-                .antMatchers("/admin/**").hasAuthority(ADMIN);
-        httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .antMatchers("/api/**").permitAll()
+                .antMatchers("/admin/**").hasAuthority(ADMIN)
+                .and()
+                .exceptionHandling().accessDeniedHandler(jwtDeniedHandler)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

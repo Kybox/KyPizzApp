@@ -1,5 +1,62 @@
 <!-- START nav -->
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+<nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top">
+    <a class="navbar-brand" href="#">
+        KyPizzApp
+        <br>
+        <small>Kybox release</small>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="">Home</a>
+            </li>
+            <li class="nav-item" *ngFor="let category of categoryList" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="getRoute(category.id)" (click)="goTo(category.id)">{{category.name}}</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" routerLink="/admin">Contact</a>
+            </li>
+            <li class="nav-item" *ngIf="authenticated" routerLinkActive="active">
+                <a class="nav-link" routerLink="/auth/account">My account</a>
+            </li>
+            <li class="nav-item" *ngIf="!authenticated" routerLinkActive="active">
+                <a class="nav-link" routerLink="/auth/login">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+            </li>
+        </ul>
+    </div>
+    <div class="float-right">
+        <a class="nav-link"><i class="ion-md-cart"></i>Cart (0)</a>
+    </div>
+</nav>
+
+<!--
+<nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top">
+    <a class="navbar-brand mr-4" routerLink="">
+        <span class=""></span>
+        KyPizzApp
+        <br>
+        <small>Kybox release</small>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <a class="nav-item nav-link active" href="#">Accueil<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" *ngFor="let category of categoryList" (click)="goTo(category.id)">{{category.name}}</a>
+        <a class="nav-item nav-link" *ngIf="!authenticated" routerLink="/auth/login">Login</a>
+        <a class="nav-item nav-link" *ngIf="authenticated" routerLink="/auth/account">Account</a>
+        <a class="nav-item nav-link" routerLink="/admin">Admin</a>
+    </div>
+    <div class="under-nav"></div>
+</nav>
+
+<nav class="navbar fixed-top navbar-expand-lg ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
         <a class="navbar-brand" href="#">
             <span class="flaticon-pizza-1 mr-1"></span>
@@ -17,15 +74,19 @@
                     <a class="nav-link" (click)="goTo(category.id)">{{category.name}}</a>
                 </li>
                 <li class="nav-item"><a routerLink="/admin" class="nav-link">Contact</a></li>
-                <li class="nav-item"><a routerLink="/admin" class="nav-link">Admin</a></li>
                 <li class="nav-item" *ngIf="!authenticated">
                     <a routerLink="/auth/login" class="nav-link">Connexion</a>
                 </li>
                 <li class="nav-item" *ngIf="authenticated">
                     <a routerLink="/auth/account" class="nav-link">Mon compte</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link"><i class="ion-md-cart"></i>Cart (0)</a>
+                </li>
+                <li class="nav-item"><a routerLink="/admin" class="nav-link">Admin</a></li>
             </ul>
         </div>
     </div>
 </nav>
+-->
 <!-- END nav -->

@@ -27,7 +27,7 @@ export class NavigationComponent implements OnInit {
         this.loadCategories();
     }
 
-    loadCategories() :void {
+    loadCategories(): void {
 
         this.categoryService.findAll().subscribe(
             resp => this.categoryList = resp.body,
@@ -35,12 +35,12 @@ export class NavigationComponent implements OnInit {
         );
     }
 
-    isAuthenticated(token:string): void {
+    isAuthenticated(token: string): void {
 
-        if(token != null){
+        if (token != null) {
             this.authService.isAuthenticated(token).subscribe(
                 resp => {
-                    let auth:Authenticated = resp.body;
+                    let auth: Authenticated = resp.body;
                     this.authenticated = auth.authenticated;
                 },
                 error => console.log(error)
@@ -50,8 +50,11 @@ export class NavigationComponent implements OnInit {
         console.log("NAV auth : " + this.authenticated);
     }
 
-    goTo(path: string) :void {
+    goTo(path: string): void {
         this.router.navigateByUrl(btoa(path)).then(null);
     }
 
+    getRoute(category: string): string {
+        return "/" + btoa(category);
+    }
 }

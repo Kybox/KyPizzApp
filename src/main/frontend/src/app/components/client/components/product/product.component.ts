@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CategoryService} from "../../../../services/category/category.service";
-import {ICategory} from "../../../../entity/category.model";
+import {Category, ICategory} from "../../../../entity/category.model";
 import {IProduct} from "../../../../entity/product.model";
 import {ProductService} from "../../../../services/product/product.service";
 import {FileService} from "../../../../services/file/file.service";
@@ -9,12 +9,12 @@ import {FileService} from "../../../../services/file/file.service";
 @Component({
     selector: 'app-product',
     templateUrl: './product.component.html',
-    styleUrls: ['./product.component.css']
+    styleUrls: ['./product.component.css', '../../client.component.css']
 })
 export class ProductComponent implements OnInit {
 
     public productList: IProduct[];
-    private category:ICategory;
+    public category:Category;
     public backgroundList = [];
 
     constructor(private route: ActivatedRoute,

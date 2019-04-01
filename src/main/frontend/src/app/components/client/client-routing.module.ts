@@ -7,6 +7,11 @@ import {AccountComponent} from "./components/account/account.component";
 
 const routes: Routes = [
     {
+        path: "home",
+        redirectTo: "",
+        pathMatch: "prefix"
+    },
+    {
         path: "",
         component: ClientComponent,
         children: [

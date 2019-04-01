@@ -8,5 +8,5 @@ import 'bootstrap4-toggle/js/bootstrap4-toggle';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'KyPizzApp';
 }

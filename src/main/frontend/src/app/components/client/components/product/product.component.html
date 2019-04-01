@@ -1,13 +1,14 @@
 <div class="main-container">
     <div class="row product-intro-block">
         <div class="col-md-7">
-            <h2 class="mb-4 product-intro-title">Our Menu Pricing</h2>
+            <h2 class="mb-4 product-intro-title">Our different {{category.name}}</h2>
+            <p class="mt-5">You will certainly find below what satiate your appetite among our selection of {{category.name}}.</p>
+            <br>
             <p class="flip">
                 <span class="deg1"></span>
                 <span class="deg2"></span>
                 <span class="deg3"></span>
             </p>
-            <p class="mt-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
         </div>
     </div>
     <div class="container">
@@ -32,9 +33,14 @@
                             <div class="col">
                                 <p>{{product.description}}</p>
                             </div>
-
                             <div class="float-right" style="margin-right: 10px;">
-                                <a href="#" class="btn btn-order">Commander</a>
+                                <div class="input-group col-auto">
+                                    <label for="{{'lb' + i}}" hidden></label>
+                                    <input type="text" id="{{'lb' + i}}" class="form-control" maxlength="2"  value="1" style="width: 40px;">
+                                    <div class="input-group-append">
+                                        <a href="#" class="btn btn-order">Order</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

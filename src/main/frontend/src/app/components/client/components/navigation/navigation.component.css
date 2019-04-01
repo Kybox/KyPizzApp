@@ -1,14 +1,82 @@
-.nav-item a {
+nav {
+    background: url("../../../../../assets/images/bg_4.jpg") no-repeat fixed;
+    height: 80px;
+    border-bottom: 10px solid #df9307;
+    font-family: "Poppins", Arial, sans-serif
+}
+
+.navbar-brand {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.navbar-brand span {
+    font-size: 24px;
+    color: #fac564;
+}
+
+.navbar-brand small {
+    text-transform: uppercase;
+    font-size: 11px;
+    display: block;
+    text-align: center;
+    color: #fac564;
+    letter-spacing: 4px;
+}
+.nav-link {
     cursor: pointer;
+    color: #fff !important;
 }
+
+.navbar-dark .navbar-nav .active > .nav-link {
+    color: #fac564 !important;
+}
+
+.nav-link:hover {
+    color: #fac564 !important;
+}
+
+@media (max-width: 991px) {
+    .nav-link {
+
+    }
+    .nav-link:hover {
+        font-size: larger;
+    }
+    .navbar-collapse {
+        width: auto;
+        border: 2px solid #df9307;
+        background: url("../../../../../assets/images/bg_4.jpg") no-repeat fixed;
+    }
+}
+
+.navbar-nav {
+    align-items: center;
+}
+
 .navbar {
-    z-index: 16;
+    /*z-index: 16;*/
 }
 
+.navbar-toggler {
+    background-color: #df9307;
+}
 
+i {
+    margin-right: 10px;
+}
+
+.under-nav {
+    height: 10px;
+    background-color: #df9307;
+}
+
+/*
 .ftco-navbar-light {
-    background: #121618 !important;
-    z-index: 3; }
+    background: url(../../../../../assets/images/bg_4.jpg) no-repeat fixed;
+    z-index: 3;
+}
+
 @media (max-width: 991.98px) {
     .ftco-navbar-light {
         background: #000 !important;
@@ -178,3 +246,4 @@
     text-align: center;
     color: #fac564;
     letter-spacing: 4px; }
+*/

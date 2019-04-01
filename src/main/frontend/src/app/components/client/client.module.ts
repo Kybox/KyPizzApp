@@ -11,7 +11,6 @@ import {FooterComponent} from './components/footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {AccountComponent} from './components/account/account.component';
 
-
 @NgModule({
     declarations: [
         NavigationComponent,

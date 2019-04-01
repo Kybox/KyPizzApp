@@ -24,5 +24,15 @@
       "name": "kypizzapp.security.jwt.extended",
       "type": "java.lang.Long",
       "description": "Description for kypizzapp.security.jwt.extended."
+    },
+    {
+      "name": "kypizzapp.security.jwt.storage-key",
+      "type": "java.lang.String",
+      "description": "Description for kypizzapp.security.jwt.storage-key."
+    },
+    {
+      "name": "kypizzapp.cookie.cart.key",
+      "type": "java.lang.String",
+      "description": "Description for kypizzapp.cookie.cart.key."
     }
   ] }

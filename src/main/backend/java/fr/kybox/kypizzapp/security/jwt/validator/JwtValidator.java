@@ -1,7 +1,7 @@
 package fr.kybox.kypizzapp.security.jwt.validator;
 
 import fr.kybox.kypizzapp.security.jwt.model.JwtUser;
-import fr.kybox.kypizzapp.security.jwt.property.JwtProperties;
+import fr.kybox.kypizzapp.config.property.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;

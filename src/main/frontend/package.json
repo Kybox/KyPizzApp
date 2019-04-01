@@ -31,6 +31,7 @@
     "ionicons": "^4.5.5",
     "jquery": "^3.3.1",
     "materialize-css": "^1.0.0-rc.2",
+    "ngx-cookie-service": "^2.1.0",
     "owl.carousel": "^2.3.4",
     "resize-base64": "^1.0.12",
     "rxjs": "~6.3.3",

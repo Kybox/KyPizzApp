@@ -8,7 +8,7 @@ import fr.kybox.kypizzapp.repository.RegisteredUserRepository;
 import fr.kybox.kypizzapp.security.Authorities;
 import fr.kybox.kypizzapp.security.jwt.generator.JwtGenerator;
 import fr.kybox.kypizzapp.security.jwt.model.JwtToken;
-import fr.kybox.kypizzapp.security.jwt.property.JwtProperties;
+import fr.kybox.kypizzapp.config.property.JwtProperties;
 import fr.kybox.kypizzapp.security.jwt.validator.JwtValidator;
 import fr.kybox.kypizzapp.service.AuthService;
 import org.slf4j.Logger;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;

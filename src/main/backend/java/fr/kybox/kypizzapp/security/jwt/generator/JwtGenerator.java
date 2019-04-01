@@ -2,7 +2,7 @@ package fr.kybox.kypizzapp.security.jwt.generator;
 
 import fr.kybox.kypizzapp.model.auth.Authority;
 import fr.kybox.kypizzapp.model.auth.RegisteredUser;
-import fr.kybox.kypizzapp.security.jwt.property.JwtProperties;
+import fr.kybox.kypizzapp.config.property.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

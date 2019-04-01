@@ -7,5 +7,6 @@ export class AppSettings {
     public static ADMIN_API_URL:string = AppSettings.DOMAIN_API + AppSettings.PORT_API + "/admin/";
 
     public static JWT_STORAGE_KEY:string = "KyPizzAppAuthToken";
+    public static COOKIE_CART_KEY:string = "";
 
 }

@@ -1,4 +1,4 @@
-package fr.kybox.kypizzapp.security.jwt.property;
+package fr.kybox.kypizzapp.config.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -10,6 +10,7 @@ public class JwtProperties {
     private String signingKey;
     private long expiration;
     private long extended;
+    private String storageKey;
 
     public String getHeader() {
         return header;
@@ -49,5 +50,13 @@ public class JwtProperties {
 
     public void setExtended(long extended) {
         this.extended = extended;
+    }
+
+    public String getStorageKey() {
+        return storageKey;
+    }
+
+    public void setStorageKey(String storageKey) {
+        this.storageKey = storageKey;
     }
 }

@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
-import {User} from "../../entity/account/user.model";
 import {Observable} from "rxjs";
 import {RegisterForm} from "../../entity/form/register.form.model";
 import {LoginForm} from "../../entity/form/login.form.model";
 import {AppSettings} from "../../config/app.settings";
 import {IJwtToken, JwtToken} from "../../entity/security/jwt.model";
 import {IAuthenticated} from "../../entity/security/authenticated.model";
-import {IProduct} from "../../entity/product.model";
+import {IJwtStorageKey} from "../../entity/security/jwt.storage.key.model";
 
 type EntityResponseType = HttpResponse<IJwtToken>;
 
@@ -52,10 +51,18 @@ export class AuthenticationService {
         if (token !== null) {
 
             return this.http
-                .get<IAuthenticated>(AppSettings.PUBLIC_API_URL + "authenticated", {
-                    observe: "response",
-                    headers: new HttpHeaders({"Authorization": "Bearer " + token})
-                });
+                .get<IAuthenticated>(AppSettings.PUBLIC_API_URL + "authenticated",
+                    {
+                        observe: "response",
+                        headers: new HttpHeaders({"Authorization": "Bearer " + token})
+                    });
         }
+    }
+
+    getStorageKey(): Observable<HttpResponse<IJwtStorageKey>> {
+
+        return this.http
+            .get<IJwtStorageKey>(AppSettings.PUBLIC_API_URL + "storage/key",
+                {observe: "response"});
     }
 }

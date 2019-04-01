@@ -21,5 +21,9 @@ kypizzapp:
       header: ENC(Er65oU6Hnb7hiCUhTiZ7LGR8ZFIrJEBs)
       prefix: ENC(Jdp/qEIs1pplDcJILosSWA==)
       signing-key: ENC(AskXjlmu3cl3bDUETg1zU6YXsk/eo2mQSCeKDZ9vQDpQzIgWhgGh6A==)
+      storage-key : ENC(szYR17hrN21isT7ZFnO8q+7v/3s3Md2hP8QQQrYUy5Y=)
       expiration: 1800
       extended: 10800
+  cookie:
+    cart:
+      key: ENC(K+hFx+JpCSTvnUaQTKwlP7Ag0HlF0mOA)

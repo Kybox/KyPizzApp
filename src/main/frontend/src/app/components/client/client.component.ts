@@ -2,6 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {NavigationComponent} from "./components/navigation/navigation.component";
 import {AppSettings} from "../../config/app.settings";
+import {CartService} from "../../services/cart/cart.service";
+import {AuthenticationService} from "../../services/authentication/authentication.service";
 
 @Component({
     selector: 'app-client',
@@ -15,15 +17,17 @@ export class ClientComponent implements OnInit {
 
     public authenticated:boolean;
 
-    constructor(private router: Router) {
+    constructor(private router: Router,
+                private cartService:CartService,
+                private authService:AuthenticationService) {
 
         this.authenticated = false;
     }
 
     ngOnInit() {
 
-        this.checkAuthentication();
-        this.navigation.isAuthenticated(null);
+        this.getCartKey();
+        //this.navigation.isAuthenticated(null);
     }
 
     componentAdded(evt):void {
@@ -34,7 +38,26 @@ export class ClientComponent implements OnInit {
             )
         }
     }
-    checkAuthentication(){
+
+    getCartKey() :void {
+
+        this.cartService.getKey().subscribe(
+            resp => AppSettings.COOKIE_CART_KEY = resp.body.key,
+            error => console.log(error),
+            () => this.getJwtStorageKey()
+        );
+    }
+
+    getJwtStorageKey() : void {
+
+        this.authService.getStorageKey().subscribe(
+            resp => AppSettings.JWT_STORAGE_KEY = resp.body.key,
+            error => console.log(error),
+            () => this.checkAuthentication()
+        );
+    }
+
+    checkAuthentication() :void {
 
         let token:string = localStorage.getItem(AppSettings.JWT_STORAGE_KEY);
         if(token != null) this.navigation.isAuthenticated(token);

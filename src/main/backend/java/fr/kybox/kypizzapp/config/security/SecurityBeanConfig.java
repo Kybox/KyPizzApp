@@ -2,7 +2,7 @@ package fr.kybox.kypizzapp.config.security;
 
 import fr.kybox.kypizzapp.security.jwt.filter.JwtFilter;
 import fr.kybox.kypizzapp.security.jwt.handler.JwtSuccessHandler;
-import fr.kybox.kypizzapp.security.jwt.property.JwtProperties;
+import fr.kybox.kypizzapp.config.property.JwtProperties;
 import fr.kybox.kypizzapp.security.jwt.provider.JwtProvider;
 import fr.kybox.kypizzapp.security.jwt.validator.JwtValidator;
 import org.apache.tomcat.util.http.LegacyCookieProcessor;

@@ -1,5 +1,6 @@
 package fr.kybox.kypizzapp.config.security;
 
+import fr.kybox.kypizzapp.security.Authenticator;
 import fr.kybox.kypizzapp.security.jwt.filter.JwtFilter;
 import fr.kybox.kypizzapp.security.jwt.handler.JwtSuccessHandler;
 import fr.kybox.kypizzapp.config.property.JwtProperties;

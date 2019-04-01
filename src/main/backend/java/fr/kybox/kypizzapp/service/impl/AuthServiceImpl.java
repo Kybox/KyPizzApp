@@ -7,13 +7,18 @@ import fr.kybox.kypizzapp.repository.AuthorityRepository;
 import fr.kybox.kypizzapp.repository.RegisteredUserRepository;
 import fr.kybox.kypizzapp.security.Authorities;
 import fr.kybox.kypizzapp.security.jwt.generator.JwtGenerator;
+import fr.kybox.kypizzapp.security.jwt.model.JwtAuthToken;
 import fr.kybox.kypizzapp.security.jwt.model.JwtToken;
 import fr.kybox.kypizzapp.config.property.JwtProperties;
+import fr.kybox.kypizzapp.security.jwt.provider.JwtProvider;
 import fr.kybox.kypizzapp.security.jwt.validator.JwtValidator;
 import fr.kybox.kypizzapp.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,13 +41,14 @@ public class AuthServiceImpl implements AuthService {
     private final JwtGenerator jwtGenerator;
     private final JwtProperties jwtProperties;
     private final JwtValidator jwtValidator;
+    private final JwtProvider jwtProvider;
 
     @Autowired
     public AuthServiceImpl(RegisteredUserRepository registeredUserRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
                            AuthorityRepository authorityRepository,
                            JwtGenerator jwtGenerator,
-                           JwtProperties jwtProperties, JwtValidator jwtValidator) {
+                           JwtProperties jwtProperties, JwtValidator jwtValidator, JwtProvider jwtProvider) {
 
         this.registeredUserRepository = registeredUserRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -50,6 +56,7 @@ public class AuthServiceImpl implements AuthService {
         this.jwtGenerator = jwtGenerator;
         this.jwtProperties = jwtProperties;
         this.jwtValidator = jwtValidator;
+        this.jwtProvider = jwtProvider;
     }
 
     @Override
@@ -88,12 +95,13 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public JwtToken loginUser(LoginForm loginForm) {
 
-        RegisteredUser user = searchUserByLogin(loginForm.getLogin());
+       UsernamePasswordAuthenticationToken userPassAuthToken =
+                new UsernamePasswordAuthenticationToken(loginForm.getLogin(), loginForm.getPassword());
 
-        if(!bCryptPasswordEncoder.matches(loginForm.getPassword(), user.getPassword()))
-            throw new LoginFormException("Bad password.");
+        JwtAuthToken jwtAuthToken = (JwtAuthToken) jwtProvider.authenticate(userPassAuthToken);
+        SecurityContextHolder.getContext().setAuthentication(jwtAuthToken);
 
-        return new JwtToken(jwtGenerator.generate(user, loginForm.isRemember()));
+        return new JwtToken(jwtGenerator.generate(jwtAuthToken, loginForm.isRemember()));
     }
 
     @Override
@@ -103,20 +111,5 @@ public class AuthServiceImpl implements AuthService {
         if(token == null || token.isEmpty()) return new Authenticated(false);
 
         return new Authenticated(jwtValidator.validate(token) != null);
-    }
-
-    private RegisteredUser searchUserByLogin(String login){
-
-        Optional<RegisteredUser> optUser = registeredUserRepository
-                .findFirstByEmail(login);
-
-        if(optUser.isPresent()) return optUser.get();
-
-        optUser = registeredUserRepository
-                .findFirstByNickNameIgnoreCase(login);
-
-        if(optUser.isPresent()) return optUser.get();
-
-        throw new LoginFormException("Login unknown.");
     }
 }

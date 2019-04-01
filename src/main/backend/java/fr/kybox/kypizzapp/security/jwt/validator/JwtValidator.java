@@ -41,7 +41,7 @@ public class JwtValidator {
             jwtUser = new JwtUser();
             jwtUser.setUsername(claims.getSubject());
             jwtUser.setId((String) claims.get(JWT_ID));
-            jwtUser.setActive((Boolean) claims.get(JWT_ACTIVE));
+            //jwtUser.setActive((Boolean) claims.get(JWT_ACTIVE));
 
             Collection<? extends GrantedAuthority> authorityList = Arrays
                     .stream(claims.get(JWT_AUTHORITIES).toString().split(COMMA))

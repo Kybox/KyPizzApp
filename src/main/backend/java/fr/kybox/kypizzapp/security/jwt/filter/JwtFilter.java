@@ -1,10 +1,15 @@
 package fr.kybox.kypizzapp.security.jwt.filter;
 
+import fr.kybox.kypizzapp.security.Authenticator;
 import fr.kybox.kypizzapp.security.jwt.model.JwtAuthToken;
 import fr.kybox.kypizzapp.config.property.JwtProperties;
+import fr.kybox.kypizzapp.security.jwt.model.JwtUser;
+import fr.kybox.kypizzapp.security.jwt.provider.JwtProvider;
+import fr.kybox.kypizzapp.security.jwt.validator.JwtValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -27,6 +32,12 @@ public class JwtFilter extends AbstractAuthenticationProcessingFilter {
     @Autowired
     private JwtProperties jwtProperties;
 
+    @Autowired
+    private JwtProvider jwtProvider;
+
+    @Autowired
+    private JwtValidator jwtValidator;
+
     public JwtFilter(RequestMatcher requestMatcher) {
         super(requestMatcher);
     }
@@ -45,8 +56,16 @@ public class JwtFilter extends AbstractAuthenticationProcessingFilter {
             return null;
         }
 
-        String token = authHeader.replace(jwtProperties.getPrefix() + SPACE, EMPTY);
-        JwtAuthToken jwtAuthToken = new JwtAuthToken(token);
+        //String token = authHeader.replace(jwtProperties.getPrefix() + SPACE, EMPTY);
+
+        JwtUser jwtUser = jwtValidator.validate(authHeader);
+
+        JwtAuthToken jwtAuthToken =
+                new JwtAuthToken(
+                        jwtUser.getUsername(),
+                        "",
+                        jwtUser.getAuthorities(),
+                        jwtUser.getId());
 
         return getAuthenticationManager().authenticate(jwtAuthToken);
     }
@@ -63,5 +82,11 @@ public class JwtFilter extends AbstractAuthenticationProcessingFilter {
         log.info("Successful authentication");
 
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected AuthenticationManager getAuthenticationManager() {
+
+        return new Authenticator(jwtProvider);
     }
 }

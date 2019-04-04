@@ -18,7 +18,7 @@ public class JwtToken {
 
     @Override
     public String toString() {
-        return "JwtToken{" +
+        return "JwtObject{" +
                 "token='" + token + '\'' +
                 '}';
     }

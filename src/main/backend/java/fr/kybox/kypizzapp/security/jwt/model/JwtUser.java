@@ -46,4 +46,14 @@ public class JwtUser {
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
     }
+
+    @Override
+    public String toString() {
+        return "JwtUser{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", active=" + active +
+                ", authorities=" + authorities +
+                '}';
+    }
 }

@@ -11,4 +11,7 @@ public final class ValueObject {
     public final static String JWT_ACTIVE = "active";
     public final static String JWT_AUTHORITIES = "authorities";
     public final static String AUTH_HEADER = "Authorization";
+
+
+    public final static String SEARCH_USER_KEY = "search_user";
 }

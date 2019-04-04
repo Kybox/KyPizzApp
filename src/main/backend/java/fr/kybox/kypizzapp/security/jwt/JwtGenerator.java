@@ -1,12 +1,12 @@
-package fr.kybox.kypizzapp.security.jwt.generator;
+package fr.kybox.kypizzapp.security.jwt;
 
 import fr.kybox.kypizzapp.config.property.JwtProperties;
-import fr.kybox.kypizzapp.security.jwt.model.JwtAuthToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
@@ -26,16 +26,18 @@ public class JwtGenerator {
         this.jwtProperties = jwtProperties;
     }
 
-    public String generate(JwtAuthToken jwtAuthToken, boolean remember) {
+    String generate(Authentication authentication, boolean remember) {
 
-        String authorityList = jwtAuthToken
+        log.info("JwtGenerator > generate");
+
+        String authorityList = authentication
                 .getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(COMMA));
 
-        Claims claims = Jwts.claims().setSubject(jwtAuthToken.getPrincipal().toString());
-        claims.put(JWT_ID, jwtAuthToken.getId());
+        Claims claims = Jwts.claims().setSubject(authentication.getPrincipal().toString());
+        //claims.put(JWT_ID, authentication.getId());
         claims.put(JWT_AUTHORITIES, authorityList);
 
         Date exp = Date.from(Instant.now().plusSeconds(jwtProperties.getExpiration()));
@@ -48,7 +50,7 @@ public class JwtGenerator {
                 .signWith(SignatureAlgorithm.HS512, jwtProperties.getSigningKey())
                 .compact();
 
-        jwtAuthToken.setToken(token);
+        //jwtAuthToken.setToken(token);
 
         return token;
     }

@@ -1,31 +1,84 @@
-package fr.kybox.kypizzapp.security.jwt.provider;
+package fr.kybox.kypizzapp.security.jwt;
 
-import fr.kybox.kypizzapp.exception.LoginFormException;
-import fr.kybox.kypizzapp.model.auth.Authority;
-import fr.kybox.kypizzapp.model.auth.RegisteredUser;
-import fr.kybox.kypizzapp.repository.RegisteredUserRepository;
-import fr.kybox.kypizzapp.security.jwt.model.JwtAuthToken;
-import fr.kybox.kypizzapp.security.jwt.model.JwtUser;
-import fr.kybox.kypizzapp.security.jwt.model.JwtUserDetails;
-import fr.kybox.kypizzapp.security.jwt.validator.JwtValidator;
+import fr.kybox.kypizzapp.config.property.JwtProperties;
+import fr.kybox.kypizzapp.security.jwt.JwtGenerator;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static fr.kybox.kypizzapp.utils.constant.ValueObject.*;
+
 @Component
+public class JwtProvider {
+
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    private JwtGenerator jwtGenerator;
+
+    @Autowired
+    private JwtProperties jwtProperties;
+
+    public String generateToken(Authentication authentication, boolean remember) {
+
+        log.info("JwtProvider > generateToken");
+        return jwtGenerator.generate(authentication, remember);
+    }
+
+    public Authentication getAuthentication(String token) {
+
+        log.info("JwtProvider > getAuthentication");
+
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtProperties.getSigningKey())
+                .parseClaimsJws(token)
+                .getBody();
+
+        Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(claims.get(JWT_AUTHORITIES).toString().split(COMMA))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+        User principal = new User(claims.getSubject(), EMPTY, authorities);
+
+        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+    }
+
+    public boolean validateToken(String token) {
+
+        log.info("JwtProvider > validateToken");
+
+        try {
+
+            Jwts.parser()
+                    .setSigningKey(jwtProperties.getSigningKey())
+                    .parseClaimsJws(token);
+
+            return true;
+        }
+        catch (Exception e) {
+
+            log.warn("Validate token :");
+            log.warn(e.getMessage());
+        }
+
+        return false;
+    }
+}
+
+/*
 public class JwtProvider extends AbstractUserDetailsAuthenticationProvider {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -51,6 +104,12 @@ public class JwtProvider extends AbstractUserDetailsAuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws LoginFormException {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        log.info("Name = " + auth.getName());
+        log.info("Cred = " + auth.getCredentials().toString());
+        log.info("Principal = " + auth.getPrincipal());
 
         RegisteredUser user = searchUserByLogin(authentication.getName());
 
@@ -104,4 +163,6 @@ public class JwtProvider extends AbstractUserDetailsAuthenticationProvider {
 
         throw new LoginFormException("Login unknown.");
     }
+
 }
+*/

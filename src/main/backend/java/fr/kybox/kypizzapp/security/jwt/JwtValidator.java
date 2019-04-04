@@ -1,4 +1,4 @@
-package fr.kybox.kypizzapp.security.jwt.validator;
+package fr.kybox.kypizzapp.security.jwt;
 
 import fr.kybox.kypizzapp.security.jwt.model.JwtUser;
 import fr.kybox.kypizzapp.config.property.JwtProperties;
@@ -27,6 +27,8 @@ public class JwtValidator {
 
     public JwtUser validate(String token) {
 
+        log.info("JwtValidator > validate");
+
         JwtUser jwtUser = null;
 
         if(token.startsWith(jwtProperties.getPrefix()))
@@ -48,9 +50,15 @@ public class JwtValidator {
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
             jwtUser.setAuthorities(authorityList);
-        }
-        catch (Exception e) { log.warn(e.getMessage()); }
 
-        return jwtUser;
+            return jwtUser;
+        }
+        catch (Exception e) {
+
+            log.warn("JwtValidator error :");
+            log.warn(e.getMessage());
+
+            return null;
+        }
     }
 }

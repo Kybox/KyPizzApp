@@ -1,21 +1,19 @@
 package fr.kybox.kypizzapp.service.impl;
 
-import fr.kybox.kypizzapp.exception.LoginFormException;
+import fr.kybox.kypizzapp.config.property.JwtProperties;
 import fr.kybox.kypizzapp.exception.RegisterFormException;
 import fr.kybox.kypizzapp.model.auth.*;
 import fr.kybox.kypizzapp.repository.AuthorityRepository;
 import fr.kybox.kypizzapp.repository.RegisteredUserRepository;
 import fr.kybox.kypizzapp.security.Authorities;
-import fr.kybox.kypizzapp.security.jwt.generator.JwtGenerator;
-import fr.kybox.kypizzapp.security.jwt.model.JwtAuthToken;
 import fr.kybox.kypizzapp.security.jwt.model.JwtToken;
-import fr.kybox.kypizzapp.config.property.JwtProperties;
-import fr.kybox.kypizzapp.security.jwt.provider.JwtProvider;
-import fr.kybox.kypizzapp.security.jwt.validator.JwtValidator;
+import fr.kybox.kypizzapp.security.jwt.JwtProvider;
+import fr.kybox.kypizzapp.security.jwt.JwtValidator;
 import fr.kybox.kypizzapp.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,30 +31,28 @@ import java.util.Optional;
 @Transactional
 public class AuthServiceImpl implements AuthService {
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RegisteredUserRepository registeredUserRepository;
     private final AuthorityRepository authorityRepository;
-    private final JwtGenerator jwtGenerator;
     private final JwtProperties jwtProperties;
     private final JwtValidator jwtValidator;
     private final JwtProvider jwtProvider;
+    private final AuthenticationManager authenticationManager;
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     public AuthServiceImpl(RegisteredUserRepository registeredUserRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
                            AuthorityRepository authorityRepository,
-                           JwtGenerator jwtGenerator,
-                           JwtProperties jwtProperties, JwtValidator jwtValidator, JwtProvider jwtProvider) {
+                           JwtProperties jwtProperties, JwtValidator jwtValidator, JwtProvider jwtProvider, AuthenticationManager authenticationManager) {
 
         this.registeredUserRepository = registeredUserRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.authorityRepository = authorityRepository;
-        this.jwtGenerator = jwtGenerator;
         this.jwtProperties = jwtProperties;
         this.jwtValidator = jwtValidator;
         this.jwtProvider = jwtProvider;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
@@ -65,16 +61,16 @@ public class AuthServiceImpl implements AuthService {
         Optional<RegisteredUser> optUser = registeredUserRepository
                 .findFirstByEmail(registerForm.getEmail());
 
-        if(optUser.isPresent())
+        if (optUser.isPresent())
             throw new RegisterFormException("This email already exists.");
 
         optUser = registeredUserRepository
                 .findFirstByNickNameIgnoreCase(registerForm.getNickName());
 
-        if(optUser.isPresent())
+        if (optUser.isPresent())
             throw new RegisterFormException(("This nickname already exists."));
 
-        Authority authority = authorityRepository.findFirstByName(Authorities.CUSTOMER);
+        Authority authority = authorityRepository.findFirstByName(Authorities.ADMIN);
         log.info("Authority = " + Arrays.toString(authorityRepository.findAll().toArray()));
 
         RegisteredUser registeredUser = new RegisteredUser();
@@ -95,20 +91,26 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public JwtToken loginUser(LoginForm loginForm) {
 
-       UsernamePasswordAuthenticationToken userPassAuthToken =
+        UsernamePasswordAuthenticationToken userPassAuthToken =
                 new UsernamePasswordAuthenticationToken(loginForm.getLogin(), loginForm.getPassword());
 
-        JwtAuthToken jwtAuthToken = (JwtAuthToken) jwtProvider.authenticate(userPassAuthToken);
-        SecurityContextHolder.getContext().setAuthentication(jwtAuthToken);
+        Authentication authentication = this.authenticationManager.authenticate(userPassAuthToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return new JwtToken(jwtGenerator.generate(jwtAuthToken, loginForm.isRemember()));
+        //Authentication authentication = this.authenticationManager.authenticate(userPassAuthToken);
+        //JwtAuthToken jwtAuthToken = (JwtAuthToken) jwtProvider.authenticate(userPassAuthToken);
+        //SecurityContextHolder.getContext().setAuthentication(authentication);
+        //return new JwtToken(jwtGenerator.generate(authentication, loginForm.isRemember()));
+        return new JwtToken(jwtProvider.generateToken(authentication, loginForm.isRemember()));
     }
 
     @Override
     public Authenticated isAuthenticated(HttpServletRequest request) {
 
+        log.info("Is Authenticated");
+
         String token = request.getHeader(jwtProperties.getHeader());
-        if(token == null || token.isEmpty()) return new Authenticated(false);
+        if (token == null || token.isEmpty()) return new Authenticated(false);
 
         return new Authenticated(jwtValidator.validate(token) != null);
     }

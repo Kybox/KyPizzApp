@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @EnableConfigurationProperties({JwtProperties.class, CookieProperties.class})
-@EnableMongoRepositories(basePackages = "fr.kybox.kypizzapp.repository")
+//@EnableMongoRepositories(basePackages = "fr.kybox.kypizzapp.repository")
 public class KypizzappApplication {
 
     public static void main(String[] args) {

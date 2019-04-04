@@ -1,4 +1,4 @@
-package fr.kybox.kypizzapp.security.jwt.model;
+package fr.kybox.kypizzapp.security.jwt;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

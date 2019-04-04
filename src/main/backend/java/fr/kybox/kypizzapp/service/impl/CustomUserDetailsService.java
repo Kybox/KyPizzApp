@@ -24,16 +24,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private final RegisteredUserRepository registeredUserRepository;
-
     @Autowired
-    public CustomUserDetailsService(RegisteredUserRepository registeredUserRepository) {
-        this.registeredUserRepository = registeredUserRepository;
-    }
+    private RegisteredUserRepository registeredUserRepository;
 
     @Override
     public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException {
 
+        log.info("loadUserByUsername");
         if(new EmailValidator().isValid(login, null)){
             return registeredUserRepository
                     .findFirstByEmail(login)

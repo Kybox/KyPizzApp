@@ -1,6 +1,8 @@
 package fr.kybox.kypizzapp.service;
 
 import fr.kybox.kypizzapp.model.Category;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -13,7 +15,7 @@ public interface CategoryService {
 
     Category addNewCategory(Category category);
 
-    Category updateCategory(Category category);
+    ResponseEntity updateCategory(Category category);
 
     Boolean deleteCategory(String id);
 

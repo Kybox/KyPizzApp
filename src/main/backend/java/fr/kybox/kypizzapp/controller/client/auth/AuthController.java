@@ -1,11 +1,8 @@
 package fr.kybox.kypizzapp.controller.client.auth;
 
-import fr.kybox.kypizzapp.model.auth.Authenticated;
-import fr.kybox.kypizzapp.model.auth.LoginForm;
-import fr.kybox.kypizzapp.model.auth.RegisterForm;
-import fr.kybox.kypizzapp.model.auth.RegisteredUser;
+import fr.kybox.kypizzapp.model.auth.*;
 import fr.kybox.kypizzapp.security.jwt.model.JwtToken;
-import fr.kybox.kypizzapp.security.jwt.property.JwtProperties;
+import fr.kybox.kypizzapp.config.property.JwtProperties;
 import fr.kybox.kypizzapp.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -66,5 +62,12 @@ public class AuthController {
         log.info("IsAuthenticated");
         log.info("Header : " + request.getHeader(jwtProperties.getHeader()));
         return ResponseEntity.ok(authService.isAuthenticated(request));
+    }
+
+    @GetMapping(value = "/storage/key")
+    public ResponseEntity<JwtStorageKey> getStorageKey() {
+
+        log.info("Get storage key");
+        return ResponseEntity.ok(new JwtStorageKey(jwtProperties.getStorageKey()));
     }
 }

@@ -21,7 +21,7 @@ export class ProductService {
 
         const req = new HttpRequest(
             "POST",
-            AppSettings.ADMIN_API_URL + "product/file",
+            AppSettings.ADMIN_API + "product/file",
             file,
             {
                 reportProgress: true,
@@ -32,26 +32,26 @@ export class ProductService {
 
     create(product: IProduct): Observable<EntityResponseType> {
         return this.http
-            .post<IProduct>(AppSettings.ADMIN_API_URL + "product", product,
+            .post<IProduct>(AppSettings.ADMIN_API + "product", product,
                 {observe: "response"});
     }
 
     findAll(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http
-            .get<IProduct[]>(AppSettings.ADMIN_API_URL + "product",
+            .get<IProduct[]>(AppSettings.ADMIN_API + "product",
                 {params: options, observe: "response"});
     }
 
     update(product:IProduct):Observable<EntityResponseType> {
         return this.http
-            .put<IProduct>(AppSettings.ADMIN_API_URL + "product", product,
+            .put<IProduct>(AppSettings.ADMIN_API + "product", product,
                 {observe: "response"});
     }
 
     findByCategory(category:ICategory):Observable<EntityArrayResponseType>{
         return this.http
-            .post<IProduct[]>(AppSettings.PUBLIC_API_URL + "products/by/category", category,
+            .post<IProduct[]>(AppSettings.PUBLIC_API + "products/by/category", category,
                 {observe: "response"});
     }
 }

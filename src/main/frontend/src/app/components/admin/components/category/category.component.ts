@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {CategoryService} from "../../../../services/category/category.service";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {filter, map} from "rxjs/operators";
-import {ICategory} from "../../../../entity/category.model";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {Category, ICategory} from "../../../../entity/category.model";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {IProduct} from "../../../../entity/product.model";
 import {ProductService} from "../../../../services/product/product.service";
 
@@ -18,9 +18,16 @@ export class CategoryComponent implements OnInit {
     public categories: ICategory[];
     public category: ICategory;
     public addForm: FormGroup;
+
     public selectedCategory: number;
+
     public btnDelete: boolean;
+    public btnUpdateDisabled:boolean;
+
     public categoryDeleted: Boolean;
+
+    public alertForAdd: boolean;
+    public alertForUpdate: boolean;
     public alertError: boolean;
     public alertSuccess: boolean;
     public alertInfo: string;
@@ -32,12 +39,23 @@ export class CategoryComponent implements OnInit {
                 private formBuilder: FormBuilder) {
 
         this.categories = [];
+
         this.btnDelete = true;
+        this.btnUpdateDisabled = true;
+
         this.categoryDeleted = false;
         this.selectedCategory = -1;
+
+        this.alertForAdd = false;
+        this.alertForUpdate = false;
         this.alertError = false;
         this.alertSuccess = false;
-        this.addForm = formBuilder.group({name: ''});
+
+
+        this.addForm = formBuilder.group(
+            {
+                name: ['', Validators.required], description: ['', Validators.required]
+            });
     }
 
     ngOnInit() {
@@ -60,39 +78,78 @@ export class CategoryComponent implements OnInit {
     hideAlerts(): void {
         this.alertSuccess = false;
         this.alertError = false;
+        this.alertForAdd = false;
+        this.alertForUpdate = false;
     }
 
-    onSubmit(): void {
+    addNew(): void {
+
         let catForm: any = this.addForm.value;
-        let category: ICategory = {name: catForm.name};
+        let category: Category = {id: null, name: catForm.name, description: catForm.description};
+
         this.categoryService.create(category).subscribe(
-            () => this.loadAll(),
-            error => console.log(error),
-            () => this.addForm.reset({name: ''})
+            () => {
+                this.alertForAdd = true;
+                this.alertSuccess = true;
+                this.alertInfo = "New category added.";
+                setTimeout(() => {
+                    this.hideAlerts()
+                }, 3000);
+                this.loadAll();
+            },
+            error => {
+                console.log(error);
+                this.alertForAdd = true;
+                this.alertError = true;
+                this.alertInfo = error;
+            },
+            () => this.addForm.reset({name: '', description: ''})
         );
     }
 
     clickSelect(i): void {
+
         this.selectedCategory = i;
         this.btnDelete = false;
-        this.alertError = false;
-        this.alertSuccess = false;
+
+        this.hideAlerts();
     }
 
-    onUpdate(evt): void {
-        let id = evt.target.id;
+    onUpdate(id: number, name: string, desc: string): void {
+
         if (id != -1) {
-            let category: ICategory = this.categories[id];
-            category.name = evt.target.value;
+            let category: Category = this.categories[id];
+            category.name = name;
+            category.description = desc;
+
             this.categories[id] = category;
-            this.categoryService.update(category)
+
+            this.categoryService
+                .update(category)
                 .subscribe(
                     () => {
-                        return true
+                        this.alertForUpdate = true;
+                        this.alertSuccess = true;
+                        this.alertInfo = "Category has been updated."
                     },
-                    error => console.log(error)
+                    resp => {
+                        console.log(resp);
+                        this.alertForUpdate = true;
+                        this.alertError = true;
+                        this.alertInfo = resp.error.message;
+                    }
                 );
         }
+    }
+
+    onLiveUpdate(input:any){
+
+        console.log(input.name);
+        if(input.name === "updateDesc"){
+            this.btnUpdateDisabled = input.value === '';
+        }
+        //this.btnUpdate = input === '';
+
     }
 
     onDelete(): void {
@@ -116,11 +173,19 @@ export class CategoryComponent implements OnInit {
             .subscribe(
                 next => {
                     this.categoryDeleted = next.body;
-                    this.alertInfo = "La catégorie " + this.categories[this.selectedCategory].name + " viens d'être supprimée.";
+                    this.alertInfo = "The category " + this.categories[this.selectedCategory].name + " has been removed.";
                     this.alertSuccess = true;
-                    return true;
+                    this.alertForUpdate = true;
+                    setTimeout(() => {
+                        this.hideAlerts();
+                    }, 3000);
                 },
-                error => console.log(error),
+                error => {
+                    console.log(error);
+                    this.alertForUpdate = true;
+                    this.alertError = true;
+                    this.alertInfo = error;
+                },
                 () => this.afterDelete());
     }
 

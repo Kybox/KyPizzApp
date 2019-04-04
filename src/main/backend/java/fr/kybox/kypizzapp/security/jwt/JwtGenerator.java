@@ -1,13 +1,13 @@
-package fr.kybox.kypizzapp.security.jwt.generator;
+package fr.kybox.kypizzapp.security.jwt;
 
-import fr.kybox.kypizzapp.model.auth.Authority;
-import fr.kybox.kypizzapp.model.auth.RegisteredUser;
-import fr.kybox.kypizzapp.security.jwt.property.JwtProperties;
+import fr.kybox.kypizzapp.config.property.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -19,36 +19,39 @@ import static fr.kybox.kypizzapp.utils.constant.ValueObject.*;
 @Component
 public class JwtGenerator {
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
-
     private final JwtProperties jwtProperties;
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     public JwtGenerator(JwtProperties jwtProperties) {
         this.jwtProperties = jwtProperties;
     }
 
-    public String generate(RegisteredUser registeredUser, boolean remember) {
+    String generate(Authentication authentication, boolean remember) {
 
-        Claims claims = Jwts.claims().setSubject(registeredUser.getNickName());
-        claims.put(JWT_ID, registeredUser.getId());
+        log.info("JwtGenerator > generate");
 
-        String authorityList = registeredUser
+        String authorityList = authentication
                 .getAuthorities()
                 .stream()
-                .map(Authority::getName)
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(COMMA));
 
+        Claims claims = Jwts.claims().setSubject(authentication.getPrincipal().toString());
+        //claims.put(JWT_ID, authentication.getId());
         claims.put(JWT_AUTHORITIES, authorityList);
-        claims.put(JWT_ACTIVE, registeredUser.isActivated());
 
         Date exp = Date.from(Instant.now().plusSeconds(jwtProperties.getExpiration()));
         if (remember) exp = Date.from(exp.toInstant().plusSeconds(jwtProperties.getExtended()));
 
-        return Jwts.builder()
+        String token = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(exp)
                 .signWith(SignatureAlgorithm.HS512, jwtProperties.getSigningKey())
                 .compact();
+
+        //jwtAuthToken.setToken(token);
+
+        return token;
     }
 }

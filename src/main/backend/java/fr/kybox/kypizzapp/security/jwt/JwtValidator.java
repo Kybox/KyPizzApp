@@ -1,7 +1,7 @@
-package fr.kybox.kypizzapp.security.jwt.validator;
+package fr.kybox.kypizzapp.security.jwt;
 
 import fr.kybox.kypizzapp.security.jwt.model.JwtUser;
-import fr.kybox.kypizzapp.security.jwt.property.JwtProperties;
+import fr.kybox.kypizzapp.config.property.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
@@ -27,6 +27,8 @@ public class JwtValidator {
 
     public JwtUser validate(String token) {
 
+        log.info("JwtValidator > validate");
+
         JwtUser jwtUser = null;
 
         if(token.startsWith(jwtProperties.getPrefix()))
@@ -41,16 +43,22 @@ public class JwtValidator {
             jwtUser = new JwtUser();
             jwtUser.setUsername(claims.getSubject());
             jwtUser.setId((String) claims.get(JWT_ID));
-            jwtUser.setActive((Boolean) claims.get(JWT_ACTIVE));
+            //jwtUser.setActive((Boolean) claims.get(JWT_ACTIVE));
 
             Collection<? extends GrantedAuthority> authorityList = Arrays
                     .stream(claims.get(JWT_AUTHORITIES).toString().split(COMMA))
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
             jwtUser.setAuthorities(authorityList);
-        }
-        catch (Exception e) { log.warn(e.getMessage()); }
 
-        return jwtUser;
+            return jwtUser;
+        }
+        catch (Exception e) {
+
+            log.warn("JwtValidator error :");
+            log.warn(e.getMessage());
+
+            return null;
+        }
     }
 }

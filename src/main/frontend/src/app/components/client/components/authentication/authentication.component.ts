@@ -93,7 +93,7 @@ export class AuthenticationComponent implements OnInit {
         this.authService.login(loginForm).subscribe(
             resp => {
                 this.notify.emit(resp.body.token);
-                this.authService.saveToken(resp.body, loginForm.remember);
+                AuthenticationService.saveToken(resp.body, loginForm.remember);
                 this.router.navigate(["auth/account"]).then(null);
             },
             error => {

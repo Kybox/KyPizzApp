@@ -1,0 +1,11 @@
+.label-search{
+    margin:0;
+    padding: 0;
+}
+table {
+    text-align: center;
+}
+tbody > tr > th {
+    font-weight: normal;
+    font-size: 16px;
+}

@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -12,4 +13,6 @@ public interface RegisteredUserRepository extends MongoRepository<RegisteredUser
 
     Optional<RegisteredUser> findFirstByEmail(String email);
     Optional<RegisteredUser> findFirstByNickNameIgnoreCase(String nickName);
+    List<RegisteredUser> findAllByEmail(String email);
+    List<RegisteredUser> findAllByNickNameIgnoreCase(String nickName);
 }

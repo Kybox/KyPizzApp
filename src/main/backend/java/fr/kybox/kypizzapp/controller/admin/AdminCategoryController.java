@@ -9,10 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin/api")
 public class AdminCategoryController {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -24,21 +23,21 @@ public class AdminCategoryController {
     }
 
     @PostMapping(value = "/category", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Category> addNewCategory(@RequestBody @Valid Category category){
+    public ResponseEntity<Category> addNewCategory(@RequestBody @Valid Category category) {
 
         log.info("Add new category");
         return ResponseEntity.ok(categoryService.addNewCategory(category));
     }
 
     @PutMapping(value = "/category", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Category> updateCategory(@RequestBody @Valid Category category){
+    public ResponseEntity<?> updateCategory(@RequestBody @Valid Category category) {
 
         log.info("Update category");
-        return ResponseEntity.ok(categoryService.updateCategory(category));
+        return categoryService.updateCategory(category);
     }
 
     @DeleteMapping(value = "/category/{id}")
-    public ResponseEntity<Boolean> deleteCategory(@PathVariable String id){
+    public ResponseEntity<Boolean> deleteCategory(@PathVariable String id) {
 
         log.info("Delete category " + id);
         return ResponseEntity.ok(categoryService.deleteCategory(id));

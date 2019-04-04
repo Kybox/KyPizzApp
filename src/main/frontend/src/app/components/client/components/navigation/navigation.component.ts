@@ -4,6 +4,7 @@ import {ICategory} from "../../../../entity/category.model";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../../services/authentication/authentication.service";
 import {Authenticated} from "../../../../entity/security/authenticated.model";
+import {AppSettings} from "../../../../config/app.settings";
 
 @Component({
     selector: 'ky-nav',
@@ -42,6 +43,8 @@ export class NavigationComponent implements OnInit {
                 resp => {
                     let auth: Authenticated = resp.body;
                     this.authenticated = auth.authenticated;
+
+                    if(!this.authenticated) AuthenticationService.clearToken();
                 },
                 error => console.log(error)
             );

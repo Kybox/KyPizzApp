@@ -1,0 +1,41 @@
+<div class="bg-light p-4">
+    <form class="form-group p-4" (ngSubmit)="searchUser(searchInput.value)">
+        <label for="searchInput" class="label-search">
+            <small class="text-muted"><i>Search a user by name or e-mail address</i></small>
+        </label>
+        <div class="input-group">
+            <input type="text"
+                   #searchInput
+                   id="searchInput"
+                   class="form-control"
+                   placeholder="Enter the data of your search">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+    <small class="text-center text-muted" *ngIf="totalUsers !== undefined">There are {{totalUsers}} registered users</small>
+    <hr>
+    <div *ngIf="userList !== undefined" class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Nickname</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>E-mail</th>
+                <th>Activated</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of userList">
+                <th>{{user.nickName}}</th>
+                <th>{{user.firstName}}</th>
+                <th>{{user.lastName}}</th>
+                <th>{{user.email}}</th>
+                <th>{{user.activated}}</th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

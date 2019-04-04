@@ -1,3 +1,84 @@
+<div class="admin">
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+        <div class="navbar-brand mr-0 p-2">Admin panel - KyPizzApp</div>
+
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">Sign out</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-3 col-lg-2 col-sm-12 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <div class="nav-link active">
+                                <span data-feather="home"><i class="fas fa-unlock-alt"></i>Dashboard</span>
+                            </div>
+                        </li>
+                        <li>
+                            <a routerLink="/restricted/admin/user" class="list-group-item list-group-item-action bg-light shadow">
+                                <span><i class="fas fa-arrow-circle-right"></i>User</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/restricted/admin/category" class="list-group-item list-group-item-action bg-light shadow">
+                                <span><i class="fas fa-arrow-circle-right"></i>Category</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/restricted/admin/product" class="list-group-item list-group-item-action bg-light shadow">
+                                <span><i class="fas fa-arrow-circle-right"></i>Product</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Saved reports</span>
+                        <a class="d-flex align-items-center text-muted" href="#">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Current month
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Last quarter
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Social engagement
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file-text"></span>
+                                Year-end sale
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 admin-content">
+                <router-outlet></router-outlet>
+            </main>
+        </div>
+    </div>
+</div>
+
+
+<!--
 <div class="admin" id="wrapper">
     <div class="bg-light border-right col-xl-auto" id="sidebar-wrapper">
         <div class="sidebar-heading">
@@ -14,12 +95,12 @@
         </div>
         <ul class="list-group list-group-flush">
             <li>
-                <a routerLink="/admin/category" class="list-group-item list-group-item-action bg-light shadow">
+                <a routerLink="/restricted/admin/category" class="list-group-item list-group-item-action bg-light shadow">
                     <i class="fas fa-arrow-circle-right" style="margin-right: 10px;"></i>Categories
                 </a>
             </li>
             <li>
-                <a routerLink="/admin/product" class="list-group-item list-group-item-action bg-light shadow">
+                <a routerLink="/restricted/admin/product" class="list-group-item list-group-item-action bg-light shadow">
                     <i class="fas fa-arrow-circle-right" style="margin-right: 10px;"></i>Produits
                 </a>
             </li>
@@ -28,14 +109,10 @@
                     <i class="fas fa-arrow-circle-right" style="margin-right: 10px;"></i>Modifier un produit
                 </a>
             </li>
-            <a href="#" class="list-group-item list-group-item-action bg-light border-right-0">Shortcuts</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
         </ul>
     </div>
     <div class="admin-content col">
         <router-outlet></router-outlet>
     </div>
 </div>
+-->

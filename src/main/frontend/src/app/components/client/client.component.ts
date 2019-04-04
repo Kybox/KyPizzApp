@@ -62,8 +62,10 @@ export class ClientComponent implements OnInit {
         let token:string = localStorage.getItem(AppSettings.JWT_STORAGE_KEY);
         if(token != null) this.navigation.isAuthenticated(token);
         else{
+            localStorage.removeItem(AppSettings.JWT_STORAGE_KEY);
             token = sessionStorage.getItem(AppSettings.JWT_STORAGE_KEY);
             if(token != null) this.navigation.isAuthenticated(token);
+            else sessionStorage.removeItem(AppSettings.JWT_STORAGE_KEY);
         }
     }
 }

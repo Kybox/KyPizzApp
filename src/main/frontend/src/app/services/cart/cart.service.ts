@@ -15,6 +15,6 @@ export class CartService {
     getKey():Observable<HttpResponse<ICartKey>> {
 
         return this.http
-            .get<ICartKey>(AppSettings.PUBLIC_API_URL + "cart/key", {observe: "response"});
+            .get<ICartKey>(AppSettings.PUBLIC_API + "cart/key", {observe: "response"});
     }
 }

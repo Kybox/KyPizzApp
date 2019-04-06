@@ -1,11 +1,18 @@
 package fr.kybox.kypizzapp.model.cart;
 
-public class CartProduct {
+public class ProductFromCart {
 
     private String id;
+    private String name;
     private int quantity;
 
-    public CartProduct() {
+    public ProductFromCart() {
+    }
+
+    public ProductFromCart(String id, String name, int quantity) {
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
     }
 
     public String getId() {
@@ -14,6 +21,14 @@ public class CartProduct {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getQuantity() {
@@ -26,8 +41,9 @@ public class CartProduct {
 
     @Override
     public String toString() {
-        return "CartProduct{" +
+        return "ProductFromCart{" +
                 "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", quantity=" + quantity +
                 '}';
     }

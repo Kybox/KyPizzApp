@@ -16,6 +16,8 @@ app:
   storage: src/main/files/
 
 kypizzapp:
+  restaurant:
+    name: KyRestaurant
   security:
     jwt:
       header: ENC(Er65oU6Hnb7hiCUhTiZ7LGR8ZFIrJEBs)

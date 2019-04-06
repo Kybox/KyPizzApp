@@ -1,36 +1,29 @@
 package fr.kybox.kypizzapp.model.cart;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
 
-    private String userId;
-    private List<CartProduct> productList;
+    private List<ProductFromCart> productList;
 
     public Cart() {
     }
 
-    public String getUserId() {
-        return userId;
-    }
+    public List<ProductFromCart> getProductList() {
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public List<CartProduct> getProductList() {
+        if(productList == null) productList = new ArrayList<>();
         return productList;
     }
 
-    public void setProductList(List<CartProduct> productList) {
+    public void setProductList(List<ProductFromCart> productList) {
         this.productList = productList;
     }
 
     @Override
     public String toString() {
         return "Cart{" +
-                "userId='" + userId + '\'' +
-                ", productList=" + productList +
+                "productList=" + productList +
                 '}';
     }
 }

@@ -1,11 +1,15 @@
-package fr.kybox.kypizzapp.model;
+package fr.kybox.kypizzapp.model.order;
 
+import fr.kybox.kypizzapp.model.Product;
+import fr.kybox.kypizzapp.model.Restaurant;
 import fr.kybox.kypizzapp.model.auth.RegisteredUser;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -15,8 +19,8 @@ public class Order {
     @Id
     private String id;
 
-    @DBRef
-    private Restaurant restaurant;
+    @NotNull
+    private String restaurant;
 
     @DBRef
     private RegisteredUser customer;
@@ -25,13 +29,16 @@ public class Order {
     private OrderStatus status;
 
     @NotNull
-    private Map<Product, Integer> productList;
+    private Map<String, Integer> productList;
 
     @NotNull
     private Boolean paid;
 
     @NotNull
     private Boolean toDeliver;
+
+    @NotNull
+    private LocalDateTime creationDate;
 
     public String getId() {
         return id;
@@ -41,11 +48,11 @@ public class Order {
         this.id = id;
     }
 
-    public Restaurant getRestaurant() {
+    public String getRestaurant() {
         return restaurant;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
+    public void setRestaurant(String restaurant) {
         this.restaurant = restaurant;
     }
 
@@ -65,11 +72,13 @@ public class Order {
         this.status = status;
     }
 
-    public Map<Product, Integer> getProductList() {
+    public Map<String, Integer> getProductList() {
+
+        if(productList == null) productList = new HashMap<>();
         return productList;
     }
 
-    public void setProductList(Map<Product, Integer> productList) {
+    public void setProductList(Map<String, Integer> productList) {
         this.productList = productList;
     }
 
@@ -87,6 +96,14 @@ public class Order {
 
     public void setToDeliver(Boolean toDeliver) {
         this.toDeliver = toDeliver;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     @Override

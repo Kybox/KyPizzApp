@@ -1,4 +1,4 @@
-package fr.kybox.kypizzapp.model;
+package fr.kybox.kypizzapp.model.order;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

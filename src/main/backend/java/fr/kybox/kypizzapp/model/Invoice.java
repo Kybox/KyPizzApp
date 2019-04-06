@@ -1,5 +1,6 @@
 package fr.kybox.kypizzapp.model;
 
+import fr.kybox.kypizzapp.model.order.Order;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;

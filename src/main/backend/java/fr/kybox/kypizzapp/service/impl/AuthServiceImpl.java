@@ -6,9 +6,10 @@ import fr.kybox.kypizzapp.model.auth.*;
 import fr.kybox.kypizzapp.repository.AuthorityRepository;
 import fr.kybox.kypizzapp.repository.RegisteredUserRepository;
 import fr.kybox.kypizzapp.security.Authorities;
-import fr.kybox.kypizzapp.security.jwt.model.JwtToken;
 import fr.kybox.kypizzapp.security.jwt.JwtProvider;
 import fr.kybox.kypizzapp.security.jwt.JwtValidator;
+import fr.kybox.kypizzapp.security.jwt.model.JwtToken;
+import fr.kybox.kypizzapp.security.jwt.model.JwtUser;
 import fr.kybox.kypizzapp.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,10 +98,6 @@ public class AuthServiceImpl implements AuthService {
         Authentication authentication = this.authenticationManager.authenticate(userPassAuthToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        //Authentication authentication = this.authenticationManager.authenticate(userPassAuthToken);
-        //JwtAuthToken jwtAuthToken = (JwtAuthToken) jwtProvider.authenticate(userPassAuthToken);
-        //SecurityContextHolder.getContext().setAuthentication(authentication);
-        //return new JwtToken(jwtGenerator.generate(authentication, loginForm.isRemember()));
         return new JwtToken(jwtProvider.generateToken(authentication, loginForm.isRemember()));
     }
 
@@ -113,5 +110,23 @@ public class AuthServiceImpl implements AuthService {
         if (token == null || token.isEmpty()) return new Authenticated(false);
 
         return new Authenticated(jwtValidator.validate(token) != null);
+    }
+
+    @Override
+    public RegisteredUser getAuthenticatedUser(HttpServletRequest request) {
+
+        String token = request.getHeader(jwtProperties.getHeader());
+        if (token == null) return null;
+
+        JwtUser jwtUser = jwtValidator.validate(token);
+        if (jwtUser == null) return null;
+
+        log.info("JwtUser = " + jwtUser);
+
+        Optional<RegisteredUser> optUser = registeredUserRepository
+                .findById(jwtValidator.validate(token).getId());
+
+
+        return optUser.orElse(null);
     }
 }

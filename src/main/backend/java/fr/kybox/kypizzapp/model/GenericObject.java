@@ -7,6 +7,10 @@ public class GenericObject {
     public GenericObject() {
     }
 
+    public GenericObject(String data) {
+        this.data = data;
+    }
+
     public String getData() {
         return data;
     }

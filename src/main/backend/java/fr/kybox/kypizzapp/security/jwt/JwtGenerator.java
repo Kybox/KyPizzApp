@@ -1,6 +1,7 @@
 package fr.kybox.kypizzapp.security.jwt;
 
 import fr.kybox.kypizzapp.config.property.JwtProperties;
+import fr.kybox.kypizzapp.security.jwt.model.JwtUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -36,22 +37,21 @@ public class JwtGenerator {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(COMMA));
 
-        Claims claims = Jwts.claims().setSubject(authentication.getPrincipal().toString());
-        //claims.put(JWT_ID, authentication.getId());
+        JwtUser jwtUser = (JwtUser) authentication.getPrincipal();
+
+        Claims claims = Jwts.claims().setSubject(jwtUser.getUsername());
+        claims.put(JWT_ID, jwtUser.getId());
+        claims.put(JWT_ACTIVE, jwtUser.isActive());
         claims.put(JWT_AUTHORITIES, authorityList);
 
         Date exp = Date.from(Instant.now().plusSeconds(jwtProperties.getExpiration()));
         if (remember) exp = Date.from(exp.toInstant().plusSeconds(jwtProperties.getExtended()));
 
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(exp)
                 .signWith(SignatureAlgorithm.HS512, jwtProperties.getSigningKey())
                 .compact();
-
-        //jwtAuthToken.setToken(token);
-
-        return token;
     }
 }

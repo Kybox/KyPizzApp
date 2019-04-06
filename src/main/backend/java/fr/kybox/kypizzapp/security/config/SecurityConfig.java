@@ -57,11 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SecurityProblemSupport securityProblemSupport;
 
-    /*
-    @Autowired
-    private KyAccessDeniedHandler accessDeniedHandler;
-    */
-
     private final CorsFilter corsFilter;
 
     @Autowired
@@ -120,6 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/admin/api/**").hasAuthority(Authorities.ADMIN)
+                .antMatchers("/order/api/**").hasAnyAuthority(Authorities.CUSTOMER, Authorities.ADMIN)
 
                 .and()
 

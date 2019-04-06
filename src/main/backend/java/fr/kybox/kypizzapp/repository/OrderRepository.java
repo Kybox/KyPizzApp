@@ -1,0 +1,9 @@
+package fr.kybox.kypizzapp.repository;
+
+import fr.kybox.kypizzapp.model.order.Order;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface OrderRepository extends MongoRepository<Order, String> {
+}

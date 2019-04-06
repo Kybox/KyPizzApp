@@ -1,7 +1,6 @@
 package fr.kybox.kypizzapp.security.config;
 
 import fr.kybox.kypizzapp.config.property.JwtProperties;
-import fr.kybox.kypizzapp.security.handler.KyAccessDeniedHandler;
 import fr.kybox.kypizzapp.security.jwt.JwtFilter;
 import fr.kybox.kypizzapp.security.jwt.JwtProvider;
 import fr.kybox.kypizzapp.security.jwt.JwtValidator;
@@ -9,12 +8,10 @@ import fr.kybox.kypizzapp.service.impl.CustomUserDetailsService;
 import org.apache.tomcat.util.http.LegacyCookieProcessor;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -65,23 +62,6 @@ public class SecurityBeanConfig {
     public UserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
     }
-
-    /*
-    @Bean
-    public AuthenticationManager authenticationManager() {
-        return new ProviderManager(Collections.singletonList(jwtProvider()));
-    }
-    */
-
-    /*
-    @Bean
-    public RequestMatcher requestMatcher() {
-
-        List<RequestMatcher> requestMatcherList = new ArrayList<>();
-        requestMatcherList.add(new AntPathRequestMatcher("/admin/**"));
-        return new OrRequestMatcher(requestMatcherList);
-    }
-    */
 
     @Bean
     public WebServerFactoryCustomizer<TomcatServletWebServerFactory> cookieProcessor() {

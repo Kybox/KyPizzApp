@@ -1,18 +1,20 @@
 package fr.kybox.kypizzapp.security.jwt.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 import java.util.List;
 
-public class JwtUser {
+public class JwtUser extends User {
 
     private String id;
-    private String username;
     private boolean active;
-    private Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUser() {
+    public JwtUser(String username, String password, Collection<? extends GrantedAuthority> authorities, String id, boolean active) {
+        super(username, password, authorities);
+        this.id = id;
+        this.active = active;
     }
 
     public String getId() {
@@ -23,37 +25,11 @@ public class JwtUser {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public boolean isActive() {
         return active;
     }
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
-
-    @Override
-    public String toString() {
-        return "JwtUser{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", active=" + active +
-                ", authorities=" + authorities +
-                '}';
     }
 }

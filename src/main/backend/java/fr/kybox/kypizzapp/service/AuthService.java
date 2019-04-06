@@ -13,4 +13,5 @@ public interface AuthService {
     RegisteredUser registerUser(RegisterForm registerForm);
     JwtToken loginUser(LoginForm loginForm);
     Authenticated isAuthenticated(HttpServletRequest request);
+    RegisteredUser getAuthenticatedUser(HttpServletRequest request);
 }

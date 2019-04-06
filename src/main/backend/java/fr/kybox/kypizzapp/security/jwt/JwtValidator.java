@@ -40,25 +40,15 @@ public class JwtValidator {
                     .setSigningKey(jwtProperties.getSigningKey())
                     .parseClaimsJws(token).getBody();
 
-            jwtUser = new JwtUser();
-            jwtUser.setUsername(claims.getSubject());
-            jwtUser.setId((String) claims.get(JWT_ID));
-            //jwtUser.setActive((Boolean) claims.get(JWT_ACTIVE));
-
             Collection<? extends GrantedAuthority> authorityList = Arrays
                     .stream(claims.get(JWT_AUTHORITIES).toString().split(COMMA))
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
-            jwtUser.setAuthorities(authorityList);
 
-            return jwtUser;
+            jwtUser = new JwtUser(claims.getSubject(), EMPTY, authorityList, (String) claims.get(JWT_ID), (Boolean) claims.get(JWT_ACTIVE));
         }
-        catch (Exception e) {
+        catch (Exception e) { log.warn("JwtValidator error : " + e.getMessage()); }
 
-            log.warn("JwtValidator error :");
-            log.warn(e.getMessage());
-
-            return null;
-        }
+        return jwtUser;
     }
 }

@@ -3,6 +3,7 @@ package fr.kybox.kypizzapp.service;
 import fr.kybox.kypizzapp.model.Category;
 import fr.kybox.kypizzapp.model.Image;
 import fr.kybox.kypizzapp.model.Product;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface ProductService {
     List<Product> findProductsByCategory(Category category);
 
     Product updateProduct(Product product);
+
+    ResponseEntity<Product> findProductById(String id);
 }

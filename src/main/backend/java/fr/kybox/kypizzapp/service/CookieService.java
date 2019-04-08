@@ -1,6 +1,7 @@
 package fr.kybox.kypizzapp.service;
 
 import fr.kybox.kypizzapp.model.GenericObject;
+import fr.kybox.kypizzapp.model.cart.Cart;
 import fr.kybox.kypizzapp.model.cart.ProductFromCart;
 import org.springframework.http.ResponseEntity;
 
@@ -13,4 +14,5 @@ public interface CookieService {
     ResponseEntity<GenericObject> getCookieKey();
     ResponseEntity<GenericObject> getCart(HttpServletRequest request);
     ResponseEntity<Cookie> addProduct(ProductFromCart cartProduct, HttpServletRequest request, HttpServletResponse response);
+    Cart updateCart(Cart cart, HttpServletRequest req, HttpServletResponse resp);
 }

@@ -1,6 +1,9 @@
 package fr.kybox.kypizzapp.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import fr.kybox.kypizzapp.config.property.CookieProperties;
+import fr.kybox.kypizzapp.exception.BadRequestException;
+import fr.kybox.kypizzapp.exception.UnsupportedMediaTypeException;
 import fr.kybox.kypizzapp.model.GenericObject;
 import fr.kybox.kypizzapp.model.cart.Cart;
 import fr.kybox.kypizzapp.model.cart.ProductFromCart;
@@ -50,8 +53,7 @@ public class CookieServiceImpl implements CookieService {
     @Override
     public ResponseEntity<Cookie> addProduct(ProductFromCart cartProduct, HttpServletRequest request, HttpServletResponse response) {
 
-        Cart cart = null;
-        Cookie cookie = null;
+        Cart cart;
         Cookie[] cookieList = request.getCookies();
 
         Optional<Cookie> optCookie;
@@ -69,8 +71,7 @@ public class CookieServiceImpl implements CookieService {
 
         if(optCookie.isPresent()){
 
-            cookie = optCookie.get();
-            cart = CookieUtils.getCartFromCookie(cookie);
+            cart = CookieUtils.getCartFromCookie(optCookie.get());
 
             log.info("Cart from cookie : " + cart);
 
@@ -92,9 +93,30 @@ public class CookieServiceImpl implements CookieService {
             cart.getProductList().add(cartProduct);
         }
 
-        response.addCookie(CookieUtils.getCookieFromCart(cart));
+        Cookie cookie;
+        try { cookie = CookieUtils.getCookieFromCart(cart); }
+        catch (JsonProcessingException e) { throw new UnsupportedMediaTypeException("The cart object is invalid"); }
+
+        response.addCookie(cookie);
 
         return ResponseEntity.ok(cookie);
+    }
+
+    @Override
+    public Cart updateCart(Cart cart, HttpServletRequest req, HttpServletResponse resp) {
+
+        Optional<Cookie> optCookie = getCookieFromRequest(req);
+
+        if(!optCookie.isPresent())
+            throw new BadRequestException("Update error, there is no cart in cookies");
+
+        Cookie cookie;
+        try { cookie = CookieUtils.getCookieFromCart(cart); }
+        catch (JsonProcessingException e) { throw new UnsupportedMediaTypeException("The cart object is invalid"); }
+
+        resp.addCookie(cookie);
+
+        return cart;
     }
 
     private Optional<Cookie> getCookieFromRequest(HttpServletRequest request){

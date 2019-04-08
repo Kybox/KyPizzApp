@@ -37,17 +37,15 @@ public class CookieUtils {
         return cart;
     }
 
-    public static Cookie getCookieFromCart(Cart cart) {
+    public static Cookie getCookieFromCart(Cart cart) throws JsonProcessingException {
 
         log.info("Cart to cookie = " + cart);
         log.info("Cookie key = " + cookieProperties.getKey());
-        String json = null;
-
-        try { json = new ObjectMapper().writeValueAsString(cart); }
-        catch (JsonProcessingException e) { log.warn(e.getMessage()); }
+        String json = new ObjectMapper().writeValueAsString(cart);
+        //catch (JsonProcessingException e) { log.warn(e.getMessage()); }
 
         Cookie cookie = new Cookie(cookieProperties.getKey(), json);
-        cookie.setHttpOnly(false);
+        cookie.setHttpOnly(false); // Angular frontend (JS)
         cookie.setVersion(1);
         cookie.setMaxAge(60*60*24); // 24 hours
         cookie.setPath("/");

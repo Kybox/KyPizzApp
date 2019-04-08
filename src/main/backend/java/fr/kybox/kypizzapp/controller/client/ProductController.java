@@ -35,4 +35,11 @@ public class ProductController {
 
         return ResponseEntity.ok(productService.findProductsByCategory(category));
     }
+
+    @GetMapping(value = "/product/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Product> getProductById(@PathVariable String id) {
+
+        log.info("Get product by id : " + id);
+        return productService.findProductById(id);
+    }
 }

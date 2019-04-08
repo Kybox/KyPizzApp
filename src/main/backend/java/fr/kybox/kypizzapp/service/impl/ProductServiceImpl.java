@@ -3,6 +3,7 @@ package fr.kybox.kypizzapp.service.impl;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
+import fr.kybox.kypizzapp.exception.ProductNotFoundException;
 import fr.kybox.kypizzapp.model.Category;
 import fr.kybox.kypizzapp.model.Image;
 import fr.kybox.kypizzapp.model.Product;
@@ -13,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -87,5 +90,13 @@ public class ProductServiceImpl implements ProductService {
         if(!optProduct.isPresent()) throw new RuntimeException("Not found");
 
         return productRepository.save(product);
+    }
+
+    @Override
+    public ResponseEntity<Product> findProductById(String id) {
+
+        Optional<Product> optProduct = productRepository.findById(id);
+
+        return optProduct.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 }

@@ -1,6 +1,7 @@
 package fr.kybox.kypizzapp.controller.client.cart;
 
 import fr.kybox.kypizzapp.model.GenericObject;
+import fr.kybox.kypizzapp.model.cart.Cart;
 import fr.kybox.kypizzapp.model.cart.ProductFromCart;
 import fr.kybox.kypizzapp.service.CookieService;
 import org.slf4j.Logger;
@@ -48,5 +49,16 @@ public class CartController {
 
         log.info("Product : " + cartProduct);
         return cookieService.addProduct(cartProduct, request, response);
+    }
+
+    @PostMapping(value = "/cart/update",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Cart updateCart(@RequestBody @Valid Cart cart,
+                           HttpServletRequest req,
+                           HttpServletResponse resp) {
+
+        log.info("Update cart");
+        return cookieService.updateCart(cart, req, resp);
     }
 }

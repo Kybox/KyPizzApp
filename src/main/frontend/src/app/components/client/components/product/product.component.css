@@ -76,5 +76,6 @@
 .btn-order:hover {
     background-color: #df9307;
     color: black;
+    cursor: pointer;
 }
 

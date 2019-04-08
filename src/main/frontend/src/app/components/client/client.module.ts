@@ -10,6 +10,8 @@ import {AuthenticationComponent} from './components/authentication/authenticatio
 import {FooterComponent} from './components/footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {AccountComponent} from './components/account/account.component';
+import {CookieService} from "ngx-cookie-service";
+import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +20,8 @@ import {AccountComponent} from './components/account/account.component';
         ProductComponent,
         AuthenticationComponent,
         FooterComponent,
-        AccountComponent
+        AccountComponent,
+        OrderComponent
     ],
     imports: [
         BrowserModule,
@@ -26,7 +29,7 @@ import {AccountComponent} from './components/account/account.component';
         HttpClientModule,
         ReactiveFormsModule
     ],
-    providers: [],
+    providers: [CookieService],
     bootstrap: [ClientComponent],
     exports: [NavigationComponent, HomeComponent, FooterComponent]
 })

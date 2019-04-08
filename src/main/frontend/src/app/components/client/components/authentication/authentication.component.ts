@@ -4,7 +4,8 @@ import {ValueObj} from "../../../../shared/value.object";
 import {LoginForm} from "../../../../entity/form/login.form.model";
 import {RegisterForm} from "../../../../entity/form/register.form.model";
 import {AuthenticationService} from "../../../../services/authentication/authentication.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router, RoutesRecognized} from "@angular/router";
+import {filter, pairwise} from "rxjs/operators";
 
 @Component({
     selector: 'app-authentication',
@@ -23,9 +24,12 @@ export class AuthenticationComponent implements OnInit {
     public hasSignInError: boolean;
     public rememberClass: string;
 
+    public beforeLogin:string;
+
     constructor(private formBuilder: FormBuilder,
                 private authService: AuthenticationService,
-                private router: Router) {
+                private router: Router,
+                private route:ActivatedRoute) {
 
         this.hasSignInError = false;
         this.registerPassMatch = false;
@@ -36,6 +40,8 @@ export class AuthenticationComponent implements OnInit {
 
         this.buildLoginForm();
         this.buildRegisterForm();
+        this.beforeLogin = atob(this.route.snapshot.paramMap.get("param"));
+        console.log("param : " + this.beforeLogin);
     }
 
     buildRegisterForm(): void {
@@ -94,7 +100,9 @@ export class AuthenticationComponent implements OnInit {
             resp => {
                 this.notify.emit(resp.body.token);
                 AuthenticationService.saveToken(resp.body, loginForm.remember);
-                this.router.navigate(["auth/account"]).then(null);
+                if(this.beforeLogin === "cart")
+                    this.router.navigateByUrl("process/order/" + btoa("process1")).then(null);
+                else this.router.navigate(["auth/account"]).then(null);
             },
             error => {
                 console.log(error);

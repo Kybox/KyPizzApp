@@ -31,62 +31,32 @@
         </ul>
     </div>
     <div class="float-right">
-        <a class="nav-link"><i class="ion-md-cart"></i>Cart (0)</a>
-    </div>
-</nav>
-
-<!--
-<nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top">
-    <a class="navbar-brand mr-4" routerLink="">
-        <span class=""></span>
-        KyPizzApp
-        <br>
-        <small>Kybox release</small>
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <a class="nav-item nav-link active" href="#">Accueil<span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" *ngFor="let category of categoryList" (click)="goTo(category.id)">{{category.name}}</a>
-        <a class="nav-item nav-link" *ngIf="!authenticated" routerLink="/auth/login">Login</a>
-        <a class="nav-item nav-link" *ngIf="authenticated" routerLink="/auth/account">Account</a>
-        <a class="nav-item nav-link" routerLink="/admin">Admin</a>
-    </div>
-    <div class="under-nav"></div>
-</nav>
-
-<nav class="navbar fixed-top navbar-expand-lg ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <span class="flaticon-pizza-1 mr-1"></span>
-            KyPizzApp
-            <br>
-            <small>Kybox release</small>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="oi oi-menu"></span> Menu
-        </button>
-        <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a routerLink="" class="nav-link">Accueil</a></li>
-                <li class="nav-item" *ngFor="let category of categoryList">
-                    <a class="nav-link" (click)="goTo(category.id)">{{category.name}}</a>
-                </li>
-                <li class="nav-item"><a routerLink="/admin" class="nav-link">Contact</a></li>
-                <li class="nav-item" *ngIf="!authenticated">
-                    <a routerLink="/auth/login" class="nav-link">Connexion</a>
-                </li>
-                <li class="nav-item" *ngIf="authenticated">
-                    <a routerLink="/auth/account" class="nav-link">Mon compte</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"><i class="ion-md-cart"></i>Cart (0)</a>
-                </li>
-                <li class="nav-item"><a routerLink="/admin" class="nav-link">Admin</a></li>
-            </ul>
+        <div class="dropdown nav-item">
+            <a class="nav-link" type="button" data-toggle="dropdown">
+                <i class="ion-md-cart"></i>Cart ({{cartTotalItems}})
+            </a>
+            <div class="dropdown-menu dropdown-menu-right cart-dropdown p-2">
+                <div *ngIf="cart !== undefined">
+                    <table class="table table-sm table-dark text-center">
+                        <tbody>
+                            <tr *ngFor="let product of cart.productList" id="{{product.id}}">
+                                <td>
+                                    <label>
+                                        <input type="number" class="form-control" min="1" value="{{product.quantity}}">
+                                    </label>
+                                </td>
+                                <td>{{product.name}}</td>
+                                <td><button class="btn btn-danger btn-close"><i class="ion-md-close"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="dropdown-divider"></div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" (click)="clickOrder()">Order</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
--->
 <!-- END nav -->

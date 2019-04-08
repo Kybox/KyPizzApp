@@ -13,17 +13,18 @@ export class TokenInterceptor implements HttpInterceptor {
 
         let jwtObject:JwtObject = AuthenticationService.getJwtObject();
 
-        console.log("Interceptor token : " + JSON.stringify(jwtObject));
+        let clonedRequest:HttpRequest<any> = request.clone();
 
         if(jwtObject != null){
-            let clonedRequest:HttpRequest<any> = request.clone({
+            clonedRequest = request.clone({
+                withCredentials: true,
                 setHeaders: {
                     Authorization: "Bearer " + jwtObject.token
                 }
             });
-
-            return next.handle(clonedRequest);
         }
-        else return next.handle(request);
+        else clonedRequest = request.clone({withCredentials: true});
+
+        return next.handle(clonedRequest);
     }
 }

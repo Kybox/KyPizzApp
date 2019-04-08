@@ -1,8 +1,8 @@
 <div class="main-container">
     <div class="row product-intro-block">
         <div class="col-md-7">
-            <h2 class="mb-4 product-intro-title">Our different {{category.name}}</h2>
-            <p class="mt-5">{{category.description}}</p>
+            <h2 class="mb-4 product-intro-title">Our different {{category?.name}}</h2>
+            <p class="mt-5">{{category?.description}}</p>
             <br>
             <p class="flip">
                 <span class="deg1"></span>
@@ -36,9 +36,9 @@
                             <div class="float-right" style="margin-right: 10px;">
                                 <div class="input-group col-auto">
                                     <label for="{{'lb' + i}}" hidden></label>
-                                    <input type="text" id="{{'lb' + i}}" class="form-control" maxlength="2"  value="1" style="width: 40px;">
+                                    <input type="text" id="{{'lb' + i}}" #inputQty class="form-control" maxlength="2"  value="1" style="width: 40px;">
                                     <div class="input-group-append">
-                                        <a href="#" class="btn btn-order">Order</a>
+                                        <span class="btn btn-order" (click)="addToCart(product.id, product.name, inputQty.value)">Order</span>
                                     </div>
                                 </div>
                             </div>

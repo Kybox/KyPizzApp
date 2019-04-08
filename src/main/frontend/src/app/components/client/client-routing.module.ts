@@ -4,6 +4,7 @@ import {ClientComponent} from "./client.component";
 import {ProductComponent} from "./components/product/product.component";
 import {AuthenticationComponent} from "./components/authentication/authentication.component";
 import {AccountComponent} from "./components/account/account.component";
+import {OrderComponent} from "./components/order/order.component";
 
 const routes: Routes = [
     {
@@ -16,8 +17,9 @@ const routes: Routes = [
         component: ClientComponent,
         children: [
             {path: ":id", component: ProductComponent},
-            {path: "auth/login", component: AuthenticationComponent},
-            {path: "auth/account", component: AccountComponent}
+            {path: "auth/login/:param", component: AuthenticationComponent},
+            {path: "auth/account", component: AccountComponent},
+            {path: "process/order/:process", component: OrderComponent}
         ]
     }
 ];

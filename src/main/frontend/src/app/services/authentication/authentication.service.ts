@@ -55,6 +55,13 @@ export class AuthenticationService {
                 loginForm, {observe: "response"});
     }
 
+    isAuthorized() :Observable<HttpResponse<IAuthenticated>> {
+
+        return this.http
+            .get<IAuthenticated>(AppSettings.PUBLIC_API + "authenticated",
+                {observe: "response"});
+    }
+
     isAuthenticated(token: string): Observable<HttpResponse<IAuthenticated>> {
 
         if (token !== null) {

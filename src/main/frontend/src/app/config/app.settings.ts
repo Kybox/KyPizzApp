@@ -12,6 +12,8 @@ export class AppSettings {
     public static ADMIN_CATEGORY_API:string = AppSettings.ADMIN_API + "category";
     public static ADMIN_USER_API:string = AppSettings.ADMIN_API + "user/";
 
+    public static CUSTOMER_ORDER_API:string = AppSettings.DOMAIN_API + AppSettings.PORT_API + "/order/api/"
+
 
     public static JWT_STORAGE_KEY:string = "KyPizzAppAuthToken";
     public static COOKIE_CART_KEY:string = "";
@@ -20,5 +22,8 @@ export class AppSettings {
 
 
     public static ERROR_UNAUTHORIZED:string = "Unauthorized";
+
+
+    public static HTTP_CODE_UNAUTHORIZED:number = 401;
 
 }

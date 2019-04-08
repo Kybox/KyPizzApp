@@ -1,10 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CategoryService} from "../../../../services/category/category.service";
 import {Category, ICategory} from "../../../../entity/category.model";
 import {IProduct} from "../../../../entity/product.model";
 import {ProductService} from "../../../../services/product/product.service";
 import {FileService} from "../../../../services/file/file.service";
+import {CartProduct, ICartProduct} from "../../../../entity/cart/cart.product.model";
+import {CookieService} from "ngx-cookie-service";
+import {AppSettings} from "../../../../config/app.settings";
+import {Cart} from "../../../../entity/cart/cart.model";
+import {CartService} from "../../../../services/cart/cart.service";
 
 @Component({
     selector: 'app-product',
@@ -13,6 +18,9 @@ import {FileService} from "../../../../services/file/file.service";
 })
 export class ProductComponent implements OnInit {
 
+    @Output()
+    public cartNotifier:EventEmitter<ICartProduct>;
+
     public productList: IProduct[];
     public category:Category;
     public backgroundList = [];
@@ -20,11 +28,13 @@ export class ProductComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private categoryService: CategoryService,
                 private productService: ProductService,
-                private fileService:FileService) {
+                private fileService:FileService,
+                private cookieService:CookieService,
+                private cartService:CartService) {
+
+        this.cartNotifier = new EventEmitter();
 
         let id = atob(this.route.snapshot.params.id);
-
-        console.log("id : " + id);
 
         categoryService.findById(id).subscribe(
             resp => this.category = resp.body,
@@ -38,8 +48,6 @@ export class ProductComponent implements OnInit {
     }
 
     getProductList(category: ICategory): void {
-
-        console.log("Category : " + category);
 
         this.productService.findByCategory(category).subscribe(
             resp => this.productList = resp.body,
@@ -65,5 +73,15 @@ export class ProductComponent implements OnInit {
                             false);
                     reader.readAsDataURL(resp);
                 });
+    }
+
+    addToCart(id:string, name:string, quantity:string) {
+
+        this.cartService
+            .addProduct(new CartProduct(id, name, Number(quantity)))
+            .subscribe(
+                () => this.cartService.getCart(),
+                error => console.log(error)
+            );
     }
 }

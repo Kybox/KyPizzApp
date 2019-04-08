@@ -4,6 +4,7 @@ import {NavigationComponent} from "./components/navigation/navigation.component"
 import {AppSettings} from "../../config/app.settings";
 import {CartService} from "../../services/cart/cart.service";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {ProductComponent} from "./components/product/product.component";
 
 @Component({
     selector: 'app-client',
@@ -22,12 +23,15 @@ export class ClientComponent implements OnInit {
                 private authService:AuthenticationService) {
 
         this.authenticated = false;
+
+        this.getCartKey();
     }
 
     ngOnInit() {
 
-        this.getCartKey();
-        //this.navigation.isAuthenticated(null);
+
+        this.getJwtStorageKey();
+        this.checkAuthentication();
     }
 
     componentAdded(evt):void {
@@ -42,9 +46,8 @@ export class ClientComponent implements OnInit {
     getCartKey() :void {
 
         this.cartService.getKey().subscribe(
-            resp => AppSettings.COOKIE_CART_KEY = resp.body.key,
-            error => console.log(error),
-            () => this.getJwtStorageKey()
+            resp => AppSettings.COOKIE_CART_KEY = resp.body.data,
+            error => console.log(error)
         );
     }
 
@@ -52,8 +55,7 @@ export class ClientComponent implements OnInit {
 
         this.authService.getStorageKey().subscribe(
             resp => AppSettings.JWT_STORAGE_KEY = resp.body.key,
-            error => console.log(error),
-            () => this.checkAuthentication()
+            error => console.log(error)
         );
     }
 

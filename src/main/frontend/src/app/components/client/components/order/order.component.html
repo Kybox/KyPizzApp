@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-around">
+    <div class="col-md-11 p-4">
+        <div class="d-flex justify-content-around align-items-center p-2 process-menu">
+            <div class="process-box" [class.process-active]="process === 'process1'"><i class="ion-md-cart" ></i><span>Cart</span></div>
+            <div class="process-box" [class.process-active]="process === 'process2'"><i class="ion-md-pin" ></i><span>Address</span></div>
+            <div class="process-box"><i class="ion-logo-model-s"></i><span>Delivering</span></div>
+            <div class="process-box"><i class="ion-md-card"></i><span>Payment</span></div>
+            <div class="process-box"><i class="ion-md-clipboard"></i><span>Summary</span></div>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-around">
+    <div class="col-11 p-4 bg-light process-content">
+        <div *ngIf="process === 'process1'">
+            <div *ngIf="!productsLoaded" class="p-5 text-center">
+                <img src="../../../../../assets/images/loading/loading.gif" alt="Loading">
+            </div>
+            <div *ngIf="productsLoaded && productDetails.length == 0">
+                <h5><i class="ion-md-warning"></i>Your cart is empty</h5>
+                <h6><i class="ion-md-arrow-round-forward"></i>Click on one of the product categories available above to add items to your cart</h6>
+            </div>
+            <div *ngIf="productsLoaded && productDetails.length > 0">
+                <h5>My order in progress</h5>
+                <h6>You currently have {{totalItems}} products in your cart</h6>
+                <div class="text-right">
+                    <small class="text-muted"></small>
+                </div>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th><b><i>Product</i></b></th>
+                            <th class="text-center"><b><i>Unit price</i></b></th>
+                            <th class="text-center"><b><i>Quantity</i></b></th>
+                            <th class="text-center"><b><i>Total Excl.Tax</i></b></th>
+                            <th class="text-center"><b><i>Tax</i></b></th>
+                            <th class="text-right"><b><i>Total Incl.Tax</i></b></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody *ngIf="order !== undefined">
+                        <tr *ngFor="let item of productDetails; index as i">
+                            <th>{{item.product.name}}</th>
+                            <th class="text-center">$ {{item.product.price}}</th>
+                            <th class="text-center">
+                                <label>
+                                    <input min="1"
+                                           type="number"
+                                           id="{{i}}"
+                                           class="form-control"
+                                           (change)="updateQuantity($event)"
+                                           [value]="item.quantity">
+                                </label>
+                            </th>
+                            <th class="text-center">$ {{item.unitPrice * item.quantity}}</th>
+                            <th class="text-center">{{item.tax}} %</th>
+                            <th class="text-right">$ {{item.amount | number: '1.2-2'}}</th>
+                            <th>
+                                <button type="button"
+                                        name="{{i}}"
+                                        class="btn btn-danger"
+                                        title="Remove this product"
+                                        (click)="removeItem($event)">
+                                    <i class="ion-md-close"></i>
+                                </button>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <div class="float-right">
+                    <h6 class="mr-4">Total amount of the order (incl.tax) : <span class="total-amount">$ {{totalAmount | number: '1.2-2'}}</span></h6>
+                    <br>
+                    <div class="text-right mr-5">
+                        <button type="button"
+                                class="btn btn-custom"
+                                (click)="validateProcess(1)">
+                            Validate the order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="process === 'process2'">
+            Address process
+        </div>
+    </div>
+</div>

@@ -116,6 +116,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/admin/api/**").hasAuthority(Authorities.ADMIN)
                 .antMatchers("/order/api/**").hasAnyAuthority(Authorities.CUSTOMER, Authorities.ADMIN)
+                .antMatchers("/account/api/**").hasAnyAuthority(Authorities.CUSTOMER, Authorities.ADMIN)
 
                 .and()
 

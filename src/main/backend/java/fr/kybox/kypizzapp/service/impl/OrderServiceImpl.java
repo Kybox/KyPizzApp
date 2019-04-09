@@ -10,6 +10,7 @@ import fr.kybox.kypizzapp.model.auth.RegisteredUser;
 import fr.kybox.kypizzapp.model.cart.Cart;
 import fr.kybox.kypizzapp.model.cart.ProductFromCart;
 import fr.kybox.kypizzapp.model.order.Order;
+import fr.kybox.kypizzapp.model.order.OrderProduct;
 import fr.kybox.kypizzapp.model.order.OrderStatus;
 import fr.kybox.kypizzapp.repository.OrderRepository;
 import fr.kybox.kypizzapp.repository.ProductRepository;
@@ -65,17 +66,10 @@ public class OrderServiceImpl implements OrderService {
         if (customer == null) throw new UnauthorizedException("The user is not authenticated");
 
         Order order = null;
-        try {
-            order = findLastSavedOrder(request);
-        } catch (RuntimeException e) {
-            log.warn(e.getMessage());
-        }
+        try { order = findLastSavedOrder(request); }
+        catch (RuntimeException e) { log.warn(e.getMessage()); }
 
-        if (order != null) {
-
-            order.setStatus(OrderStatus.CANCELLED);
-            orderRepository.save(order);
-        }
+        if (order != null) orderRepository.delete(order);
 
         return orderRepository.save(createNewOrder(customer, cart));
     }
@@ -83,9 +77,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order updateOrder(Order order) throws BadRequestException {
 
-        Optional<Order> optOrder = orderRepository.findById(order.getId());
-
-        if (!optOrder.isPresent())
+        if (!orderRepository.findById(order.getId()).isPresent())
             throw new BadRequestException("The order was not found");
 
         return orderRepository.save(order);
@@ -118,7 +110,7 @@ public class OrderServiceImpl implements OrderService {
             if (!optProduct.isPresent())
                 throw new ProductNotFoundException("Cannot found the product " + productFromCart.getName());
 
-            order.getProductList().put(productFromCart.getId(), productFromCart.getQuantity());
+            order.getProductList().add(new OrderProduct(productFromCart.getId(), productFromCart.getQuantity()));
         }
 
         return order;

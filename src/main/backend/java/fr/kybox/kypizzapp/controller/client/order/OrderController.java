@@ -38,9 +38,18 @@ public class OrderController {
     }
 
     @PostMapping(value = "/update/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Order updateOrder(@PathVariable String id, @RequestBody @Valid Order order) {
+    public Order updateOrderId(@PathVariable String id, @RequestBody @Valid Order order) {
 
         log.info("Save order " + id);
+        return orderService.updateOrder(order);
+    }
+
+    @PutMapping(value = "/update",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Order updateOrder(@RequestBody @Valid Order order) {
+
+        log.info("Update order");
         return orderService.updateOrder(order);
     }
 }

@@ -2,6 +2,7 @@ package fr.kybox.kypizzapp.model.order;
 
 import fr.kybox.kypizzapp.model.Product;
 import fr.kybox.kypizzapp.model.Restaurant;
+import fr.kybox.kypizzapp.model.auth.Address;
 import fr.kybox.kypizzapp.model.auth.RegisteredUser;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -9,9 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Document
 public class Order {
@@ -25,11 +24,14 @@ public class Order {
     @DBRef
     private RegisteredUser customer;
 
+    @DBRef
+    private Address address;
+
     @NotNull
     private OrderStatus status;
 
     @NotNull
-    private Map<String, Integer> productList;
+    private List<OrderProduct> productList;
 
     @NotNull
     private Boolean paid;
@@ -64,6 +66,14 @@ public class Order {
         this.customer = customer;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public OrderStatus getStatus() {
         return status;
     }
@@ -72,13 +82,13 @@ public class Order {
         this.status = status;
     }
 
-    public Map<String, Integer> getProductList() {
+    public List<OrderProduct> getProductList() {
 
-        if(productList == null) productList = new HashMap<>();
+        if(productList == null) productList = new ArrayList<>();
         return productList;
     }
 
-    public void setProductList(Map<String, Integer> productList) {
+    public void setProductList(List<OrderProduct> productList) {
         this.productList = productList;
     }
 

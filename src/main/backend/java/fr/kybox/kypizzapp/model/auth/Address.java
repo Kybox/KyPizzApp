@@ -3,19 +3,29 @@ package fr.kybox.kypizzapp.model.auth;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Document
 public class Address {
 
-    @Id
-    private String id;
+    @Id private String id;
+
+    @NotNull private String firstName;
+    @NotNull private String lastName;
 
     private String streetNumber;
-    private String streetName;
-    private String zipCode;
-    private String city;
-    private String country;
+
+    @NotNull private String streetName;
+
+    @NotNull private String zipCode;
+
+    @NotNull private String city;
+
+    @NotNull private String country;
+
+    public Address() {
+    }
 
     public String getId() {
         return id;
@@ -23,6 +33,22 @@ public class Address {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getStreetNumber() {

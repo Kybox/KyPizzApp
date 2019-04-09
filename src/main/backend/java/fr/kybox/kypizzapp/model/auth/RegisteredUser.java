@@ -62,6 +62,9 @@ public class RegisteredUser implements Serializable {
     private LocalDateTime creationDate;
 
     @DBRef
+    private List<Address> addressList;
+
+    @DBRef
     private List<Authority> authorities = new ArrayList<>();
 
     public String getId() {
@@ -144,6 +147,16 @@ public class RegisteredUser implements Serializable {
         this.creationDate = creationDate;
     }
 
+    public List<Address> getAddressList() {
+
+        if(this.addressList == null) this.addressList = new ArrayList<>();
+        return addressList;
+    }
+
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -170,6 +183,7 @@ public class RegisteredUser implements Serializable {
                 ", activated=" + activated +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", creationDate=" + creationDate +
+                ", addressList=" + addressList +
                 ", authorities=" + authorities +
                 '}';
     }

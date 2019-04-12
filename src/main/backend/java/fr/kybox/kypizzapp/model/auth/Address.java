@@ -24,6 +24,8 @@ public class Address {
 
     @NotNull private String country;
 
+    private String additionalInfo;
+
     public Address() {
     }
 
@@ -89,6 +91,14 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
     }
 
     @Override

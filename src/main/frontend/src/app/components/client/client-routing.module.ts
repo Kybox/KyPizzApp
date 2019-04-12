@@ -19,7 +19,7 @@ const routes: Routes = [
             {path: ":id", component: ProductComponent},
             {path: "auth/login/:param", component: AuthenticationComponent},
             {path: "auth/account", component: AccountComponent},
-            {path: "process/order/:process", component: OrderComponent}
+            {path: "order/:process", component: OrderComponent}
         ]
     }
 ];

@@ -3,6 +3,7 @@ package fr.kybox.kypizzapp.service.impl;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.gridfs.GridFSDBFile;
+import fr.kybox.kypizzapp.exception.NotFoundException;
 import fr.kybox.kypizzapp.exception.ProductNotFoundException;
 import fr.kybox.kypizzapp.model.Category;
 import fr.kybox.kypizzapp.model.Image;
@@ -93,10 +94,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<Product> findProductById(String id) {
+    public Product findProductById(String id) throws NotFoundException {
 
         Optional<Product> optProduct = productRepository.findById(id);
 
-        return optProduct.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        return optProduct.orElseThrow(() -> new NotFoundException("The product was not found."));
     }
 }

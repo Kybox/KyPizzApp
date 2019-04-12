@@ -1,16 +1,17 @@
 package fr.kybox.kypizzapp.model.order;
 
-import fr.kybox.kypizzapp.model.Product;
-import fr.kybox.kypizzapp.model.Restaurant;
 import fr.kybox.kypizzapp.model.auth.Address;
 import fr.kybox.kypizzapp.model.auth.RegisteredUser;
+import fr.kybox.kypizzapp.model.payment.Payment;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Document
 public class Order {
@@ -33,11 +34,14 @@ public class Order {
     @NotNull
     private List<OrderProduct> productList;
 
+    @DBRef
+    private Payment payment;
+
     @NotNull
     private Boolean paid;
 
-    @NotNull
-    private Boolean toDeliver;
+    @DBRef
+    private DeliveryMethod deliveryMethod;
 
     @NotNull
     private LocalDateTime creationDate;
@@ -84,12 +88,20 @@ public class Order {
 
     public List<OrderProduct> getProductList() {
 
-        if(productList == null) productList = new ArrayList<>();
+        if (productList == null) productList = new ArrayList<>();
         return productList;
     }
 
     public void setProductList(List<OrderProduct> productList) {
         this.productList = productList;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public Boolean getPaid() {
@@ -100,12 +112,12 @@ public class Order {
         this.paid = paid;
     }
 
-    public Boolean getToDeliver() {
-        return toDeliver;
+    public DeliveryMethod getDeliveryMethod() {
+        return deliveryMethod;
     }
 
-    public void setToDeliver(Boolean toDeliver) {
-        this.toDeliver = toDeliver;
+    public void setDeliveryMethod(DeliveryMethod deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
     }
 
     public LocalDateTime getCreationDate() {

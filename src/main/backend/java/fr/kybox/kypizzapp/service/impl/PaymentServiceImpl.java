@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -45,8 +46,20 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment update(Payment payment) {
 
         if(!paymentRepository.findById(payment.getId()).isPresent())
-            throw new BadRequestException("The payment object don't exists");
+            throw new BadRequestException("The payment object don't exists.");
 
         return paymentRepository.save(payment);
+    }
+
+    @Override
+    public List<Payment> delete(String id) {
+
+        Optional<Payment> optPayment = paymentRepository.findById(id);
+        if(!optPayment.isPresent())
+            throw new NotFoundException("The payment method was not found.");
+
+        paymentRepository.delete(optPayment.get());
+
+        return paymentRepository.findAll();
     }
 }

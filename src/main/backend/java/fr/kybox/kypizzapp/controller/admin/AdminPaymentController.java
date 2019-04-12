@@ -52,4 +52,11 @@ public class AdminPaymentController {
         log.info("Update payment");
         return paymentService.update(payment);
     }
+
+    @DeleteMapping(value = "/payment/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<Payment> delete(@PathVariable String id) {
+
+        log.info("Delete payment " + id);
+        return paymentService.delete(id);
+    }
 }

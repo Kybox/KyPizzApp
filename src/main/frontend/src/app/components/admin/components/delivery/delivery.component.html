@@ -1,0 +1,97 @@
+<div class="admin-delivery p-4">
+    <div class="card">
+        <div class="card-header">
+            Add a new delivery method
+        </div>
+        <div class="card-body">
+            <form class="form" [formGroup]="addForm" (ngSubmit)="submitDeliveryMethod()">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Description</span>
+                    </div>
+                    <input type="text"
+                           class="form-control"
+                           aria-label="Description"
+                           placeholder="Description"
+                           formControlName="description"
+                           required>
+                    <div class="input-group-append">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Amount</span>
+                        </div>
+                        <input type="text"
+                               class="form-control"
+                               aria-label="Amount"
+                               placeholder="Amount"
+                               formControlName="amount"
+                               (input)="checkAmount($event)"
+                               floatFilter
+                               required>
+                        <button class="btn btn-info"
+                                type="submit"
+                                [disabled]="addForm.invalid">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div *ngIf="deliveryMethodList === undefined" class="text-center bg-light p-5">
+        <img src="../../../../../assets/images/loading/loading.gif" alt="Loading">
+    </div>
+    <div *ngIf="deliveryMethodList !== undefined">
+        <div class="card">
+            <div class="card-header">
+                The delivery method list
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th class="text-center">Amount</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let deliveryMethod of deliveryMethodList; index as i">
+                            <td>
+                                <input type="text"
+                                       class="form-control"
+                                       aria-label="Description"
+                                       (input)="liveDescriptionUpdate($event, i)"
+                                       [value]="deliveryMethod.description">
+                            </td>
+                            <td class="text-center">
+                                <input type="text"
+                                       class="form-control"
+                                       aria-label="Amount"
+                                       (input)="liveAmountUpdate($event, i)"
+                                       [value]="deliveryMethod.amount"
+                                       floatFilter>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <button type="button"
+                                            class="btn btn-primary"
+                                            (click)="updateDeliveryMethod(i)">
+                                        Update
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-danger"
+                                            (click)="deleteDeliveryMethod(i)">
+                                        Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

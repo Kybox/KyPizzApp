@@ -1,16 +1,22 @@
 <div class="d-flex justify-content-around">
-    <div class="col-md-11 p-4">
+    <div class="col-md-11 p-4" *ngIf="process !== 'paymentValidated' && process !== 'paymentFailed'">
         <div class="d-flex justify-content-around align-items-center p-2 process-menu">
             <div class="process-box" [class.process-active]="process === 'process1'"><i class="ion-md-cart" ></i><span>Cart</span></div>
             <div class="process-box" [class.process-active]="process === 'process2'"><i class="ion-md-pin" ></i><span>Address</span></div>
-            <div class="process-box"><i class="ion-logo-model-s"></i><span>Delivering</span></div>
-            <div class="process-box"><i class="ion-md-card"></i><span>Payment</span></div>
-            <div class="process-box"><i class="ion-md-clipboard"></i><span>Summary</span></div>
+            <div class="process-box" [class.process-active]="process === 'process3'"><i class="ion-logo-model-s"></i><span>Delivering</span></div>
+            <div class="process-box" [class.process-active]="process === 'process4'"><i class="ion-md-card"></i><span>Payment</span></div>
+            <div class="process-box" [class.process-active]="process === 'process5'"><i class="ion-md-clipboard"></i><span>Summary</span></div>
         </div>
     </div>
+    <div *ngIf="process === 'paymentValidated'">
+        SUCCESS !
+    </div>
+    <div *ngIf="process === 'paymentFailed'"></div>
 </div>
 <div class="d-flex justify-content-around">
     <div class="col-11 p-4 bg-light process-content">
+
+        <!-- Order process 1 -->
         <div *ngIf="process === 'process1'">
             <div *ngIf="!productsLoaded" class="p-5 text-center">
                 <img src="../../../../../assets/images/loading/loading.gif" alt="Loading">
@@ -83,8 +89,281 @@
                 </div>
             </div>
         </div>
+        <!-- END Order process 1 -->
+
+        <!-- Order process 2 -->
         <div *ngIf="process === 'process2'">
-            Address process
+            <div *ngIf="!addressesLoaded" class="p-5 text-center">
+                <img src="../../../../../assets/images/loading/loading.gif" alt="Loading">
+            </div>
+            <div *ngIf="addressesLoaded">
+                <div *ngIf="addressList.length === 0 || addNewAddress">
+                    <div *ngIf="addressList.length === 0">
+                        <h5>
+                            <i class="ion-md-warning"></i>
+                            No address are registered yet
+                        </h5>
+                        <h6>
+                            <i class="ion-md-arrow-round-forward"></i>
+                            Add a reference address by filling out the form below
+                        </h6>
+                    </div>
+                    <div *ngIf="addressList.length > 0">
+                        <h5>Adding a new address</h5>
+                        <h6>Add a new address by filling out the form below</h6>
+                    </div>
+                    <hr>
+                    <form [formGroup]="addressForm" (ngSubmit)="submitNewAddress()">
+                        <div class="d-flex justify-content-around flex-wrap">
+                            <div class="col-md-5 col-sm-12">
+                                <label for="firstName">
+                                    <small class="text-muted">First name</small>
+                                </label>
+                                <input type="text"
+                                       id="firstName"
+                                       class="form-control input-address"
+                                       formControlName="firstName"
+                                       placeholder="*required"
+                                       required>
+
+                                <label for="lastName">
+                                    <small class="text-muted">Last name</small>
+                                </label>
+                                <input type="text"
+                                       id="lastName"
+                                       class="form-control input-address"
+                                       formControlName="lastName"
+                                       placeholder="*required"
+                                       required>
+
+                                <label for="streetNumber">
+                                    <small class="text-muted">Street number</small>
+                                </label>
+                                <input type="text"
+                                       id="streetNumber"
+                                       class="form-control input-address"
+                                       formControlName="streetNumber"
+                                       placeholder="*required"
+                                       required>
+
+                                <label for="streetName">
+                                    <small class="text-muted">Street name</small>
+                                </label>
+                                <input type="text"
+                                       id="streetName"
+                                       class="form-control input-address"
+                                       formControlName="streetName"
+                                       placeholder="*required"
+                                       required>
+
+                            </div>
+                            <div class="col-md-5 col-sm-12">
+                                <div class="d-flex justify-content-around">
+                                    <div class="pr-1">
+                                        <label for="zipCode">
+                                            <small class="text-muted">Zip code</small>
+                                        </label>
+                                        <input type="text"
+                                               id="zipCode"
+                                               class="form-control input-address"
+                                               formControlName="zipCode"
+                                               placeholder="*required"
+                                               integerFilter
+                                               required>
+                                    </div>
+                                    <div class="pl-1">
+                                        <label for="city">
+                                            <small class="text-muted">City</small>
+                                        </label>
+                                        <input type="text"
+                                               id="city"
+                                               class="form-control input-address"
+                                               formControlName="city"
+                                               placeholder="*required"
+                                               required>
+                                    </div>
+                                </div>
+
+                                <label for="country">
+                                    <small class="text-muted">Country</small>
+                                </label>
+                                <input type="text"
+                                       id="country"
+                                       class="form-control input-address"
+                                       formControlName="country"
+                                       placeholder="*required"
+                                       required>
+
+                                <label for="additionalInfo">
+                                    <small class="text-muted">Additional information</small>
+                                </label>
+                                <textarea rows="1"
+                                          id="additionalInfo"
+                                          class="form-control"
+                                          formControlName="additionalInfo"
+                                          placeholder="*optional">
+                                </textarea>
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-custom" [disabled]="addressForm.invalid">Save this address</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-custom ml-5" (click)="addNewAddress = false">Select an already registered address</button>
+                    </div>
+                </div>
+                <div *ngIf="addressList.length > 0 && !addNewAddress">
+                    <h5>Select a reference address</h5>
+                    <h6>Or you can enter a new address by clicking on the add address button</h6>
+                    <hr>
+                    <div class="d-flex justify-content-around flex-wrap">
+                        <div class="col-md-5 text-center address-box p-2" *ngFor="let address of addressList; index as i">
+                            <p>{{address.firstName}} {{address.lastName}}</p>
+                            <p>{{address.streetNumber}} {{address.streetName}}</p>
+                            <p>{{address.zipCode}} {{address.city}}</p>
+                            <p>{{address.country}}</p>
+                            <p>{{address.additionalInfo}}</p>
+                            <hr>
+                            <div class="p-2 text-center">
+                                <input [checked]="i === 0" type="radio" id="{{address.id}}" name="selectAddress" (change)="setSelectAddress(i)">
+                                <label for="{{address.id}}" class="label-radio">
+                                    <small>Select this address</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="text-right p-4">
+                        <button type="button" class="btn btn-custom" (click)="addNewAddress = true">Add address</button>
+                        <button type="button" class="btn btn-custom ml-5" (click)="validateProcess(2)">Validate the address</button>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- END Order process 2 -->
+
+        <!-- Order process 3 -->
+        <div *ngIf="process === 'process3'">
+            <div *ngIf="deliveryMethodList === undefined" class="p-5 text-center">
+                <img src="../../../../../assets/images/loading/loading.gif" alt="Loading">
+            </div>
+            <div *ngIf="deliveryMethodList !== undefined">
+                <h5>Select the delivery method</h5>
+                <h6>You can choose between home delivery of your order or pick it up at the pizzeria</h6>
+                <hr>
+                <div class="d-flex justify-content-around flex-wrap">
+                    <div class="custom-box col-sm-4" *ngFor="let deliveryMethod of deliveryMethodList; index as i">
+                        <p class="p-4">{{deliveryMethod.description}}</p>
+                        <p class="p-2">$ {{deliveryMethod.amount}}</p>
+                        <div class="p-2 text-center">
+                            <input type="radio" id="{{deliveryMethod.id}}" name="selectDeliveryMethod" (change)="setDeliveryMethod(i)">
+                            <label for="{{deliveryMethod.id}}" class="label-radio">
+                                <small>Select this delivery method</small>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="text-center p-4">
+                    <button type="button"
+                            class="btn btn-custom"
+                            (click)="validateProcess(3)">
+                        Validate the delivery method
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- END Order process 3 -->
+
+        <!-- Order process 4 -->
+        <div *ngIf="process === 'process4'">
+            <div *ngIf="paymentList === undefined" class="p-5 text-center">
+                <img src="../../../../../assets/images/loading/loading.gif" alt="Loading">
+            </div>
+            <div *ngIf="paymentList !== undefined">
+                <h5>Select the payment method</h5>
+                <h6>We have selected for you the most popular payment methods on the net.</h6>
+                <hr>
+                <div class="d-flex justify-content-around flex-wrap">
+                    <div *ngFor="let payment of paymentList; index as i">
+                        <div class="custom-box">
+                            <p class="p-4">{{payment.api}}</p>
+                            <div class="p-2 text-center">
+                                <input type="radio"
+                                       id="{{payment.id}}"
+                                       name="selectDeliveryMethod"
+                                       [checked]="i === 0"
+                                       (change)="selectPaymentMethod(i)">
+                                <label for="{{payment.id}}" class="label-radio">
+                                    <small>Select this payment method</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="text-center">
+                    <button type="button"
+                            class="btn btn-custom"
+                            (click)="validateProcess(4)">
+                        Validate the payment method
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- END Order process 4 -->
+
+        <!-- Order process 5 -->
+        <div *ngIf="process === 'process5'">
+            <div *ngIf="order === undefined || !productsLoaded" class="p-5 text-center">
+                <img src="../../../../../assets/images/loading/loading.gif" alt="Loading">
+            </div>
+            <div *ngIf="order !== undefined && productsLoaded">
+                <h5>Order summary</h5>
+                <h6>Please check all of the information below before proceeding to the payment of the order.</h6>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th><b><i>Product</i></b></th>
+                            <th class="text-center"><b><i>Unit price</i></b></th>
+                            <th class="text-center"><b><i>Quantity</i></b></th>
+                            <th class="text-center"><b><i>Total Excl.Tax</i></b></th>
+                            <th class="text-center"><b><i>Tax</i></b></th>
+                            <th class="text-right"><b><i>Total Incl.Tax</i></b></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody *ngIf="order !== undefined">
+                        <tr *ngFor="let item of productDetails; index as i">
+                            <th>{{item.product.name}}</th>
+                            <th class="text-center">$ {{item.product.price}}</th>
+                            <th class="text-center">{{item.quantity}}</th>
+                            <th class="text-center">$ {{item.unitPrice * item.quantity}}</th>
+                            <th class="text-center">{{item.tax}} %</th>
+                            <th class="text-right">$ {{item.amount | number: '1.2-2'}}</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <div class="float-right text-right col-sm-12">
+                    <h6 class="mr-4">Delivery amount ({{order.deliveryMethod.description}}) : <span class="total-amount">$ {{order.deliveryMethod.amount | number: '1.2-2'}}</span></h6>
+                    <h6 class="mr-4">Total amount of the order (incl.tax) : <span class="total-amount">$ {{(totalAmount + order.deliveryMethod.amount) | number: '1.2-2'}}</span></h6>
+                    <h6 class="mr-4">Payment method : {{order.payment.api}}</h6>
+                </div>
+                <br>
+                <br>
+                <button type="button"
+                        class="btn btn-custom"
+                        (click)="proceedPayment()">
+                    Proceed to payment
+                </button>
+            </div>
+        </div>
+        <!-- END Order process 5 -->
     </div>
 </div>

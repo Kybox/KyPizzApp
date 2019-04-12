@@ -1,4 +1,4 @@
-package fr.kybox.kypizzapp.controller.client.account;
+package fr.kybox.kypizzapp.controller.client;
 
 import fr.kybox.kypizzapp.model.auth.Address;
 import fr.kybox.kypizzapp.model.auth.RegisteredUser;

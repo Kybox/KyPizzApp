@@ -6,6 +6,7 @@ import {IGenericObject} from "../../entity/generic.object.model";
 import {CartProduct, ICartProduct} from "../../entity/cart/cart.product.model";
 import {Cart, ICart} from "../../entity/cart/cart.model";
 import {ProductDetails} from "../../entity/order/product.details.model";
+import {Order} from "../../entity/order.model";
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +37,7 @@ export class CartService {
         return this.http.post<string>(AppSettings.PUBLIC_API + "cart/add", cartProduct, {observe: "response"});
     }
 
-    public getCart(): void {
+    public getCart(): Cart {
 
         this.http.get<IGenericObject>(AppSettings.PUBLIC_API + "cart").subscribe(
             resp => {
@@ -45,6 +46,8 @@ export class CartService {
             },
             error => console.log(error)
         );
+
+        return this.cart;
     }
 
     getTotalItems(): number {
@@ -59,7 +62,7 @@ export class CartService {
         return total;
     }
 
-    public updateCart(productDetails:ProductDetails[]): void {
+    public updateCartFromOrderProcess(productDetails:ProductDetails[]): void {
 
         let productList: CartProduct[] = [];
         let cart: Cart = new Cart(productList);

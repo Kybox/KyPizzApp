@@ -74,7 +74,7 @@ export class NavigationComponent implements OnInit {
         this.authService.isAuthorized().subscribe(
             resp => {
                 if(resp.body.authenticated)
-                    this.router.navigateByUrl("process/order/" + btoa("process1")).then(null);
+                    this.router.navigateByUrl("order/" + btoa("process1")).then(null);
                 else this.router.navigateByUrl("auth/login/" + btoa("cart")).then(null);
             },
             error => console.log(error)

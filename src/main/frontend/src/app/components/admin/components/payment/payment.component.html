@@ -1,0 +1,100 @@
+<div class="admin-payment p-4">
+    <div class="card">
+        <div class="card-header">
+            Add a new payment
+        </div>
+        <div class="card-body">
+            <form class="form" [formGroup]="payForm">
+                <label class="sr-only" for="api">API</label>
+                <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">API</div>
+                    </div>
+                    <input id="api"
+                           type="text"
+                           class="form-control"
+                           placeholder="API Label"
+                           formControlName="api">
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label><small [ngClass]="classLabel">{{stateLabel}}</small></label>
+                        <span class="custom-checkbox">
+                            <input id="cb"
+                                   type="checkbox"
+                                   formControlName="activated"
+                                   (change)="setPaymentState($event)">
+                            <label for="cb" class="payment-state"></label>
+                        </span>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <button type="button"
+                                class="btn btn-info"
+                                (click)="submitPayment()"
+                                [disabled]="payForm.invalid">
+                            Save the payment method
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            List of payment methods
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" *ngIf="paymentList != undefined">
+                <div class="text-center p-4 alert alert-info">
+                    {{msgInfo}}
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>API Label</th>
+                        <th class="text-center">Activated</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let payment of paymentList; index as i">
+                        <td>
+                            <label>
+                                <input type="text"
+                                       class="form-control"
+                                       [value]="payment.api" (input)="liveUpdateApiLabel(i, $event)">
+                            </label>
+                        </td>
+                        <td class="text-center">
+                            <span class="custom-checkbox">
+                                <input id="{{payment.id}}"
+                                       type="checkbox"
+                                       [checked]="payment.activated"
+                                       (change)="liveUpdateApiActivated(i, $event)">
+                                <label for="{{payment.id}}" class="payment-state ml-0"></label>
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group" role="group">
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        (click)="updatePayment(i)">
+                                    Update
+                                </button>
+                                <button type="button"
+                                        class="btn btn-danger"
+                                        (click)="deletePayment(i)">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

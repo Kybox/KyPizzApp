@@ -29,3 +29,9 @@ kypizzapp:
   cookie:
     cart:
       key: ENC(K+hFx+JpCSTvnUaQTKwlP7Ag0HlF0mOA)
+  payment:
+    api:
+      paypal:
+        client-id: ENC(9XDYCo+xwjqKgKKaT1qJbg4CKltfq+JH0PtQ8T1InTnRwMQ+uecpKKIytX3rooruukK/vfAD6ZBx3QARWCWCK8nARFuyxDbudPu+x3GgWTn/yhoitQGZxa9+ZsIgDQKt)
+        secret: ENC(b9Bp4D6IcE4AfGPOWrAO3oinw6QSn283uP2w+2p9u4dqJezaix2SBa5vjlhZ+QicG438ADsNTT5pcfJQujG+haxqVN8+BUhhWRrZDo1J6Znglew5svxsoDhlCA9URve3)
+        sandbox-url: ENC(xJBloaq2y0NAJKTSmGEyYaQWMcpUMElo+4B8ViqJgMkAZ5nzyD/1yRqbr51tzKeJ6akezLS5j8U=)

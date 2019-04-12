@@ -8,6 +8,8 @@ import {AdminRoutingModule} from "./admin-routing.module";
 import {ProductComponent} from "./components/product/product.component";
 import {NumericFloatDirective} from "../../directive/numeric-float.directive";
 import { UserComponent } from './components/user/user.component';
+import { PaymentComponent } from './components/payment/payment.component';
+import { DeliveryComponent } from './components/delivery/delivery.component';
 
 @NgModule({
     declarations: [
@@ -15,7 +17,9 @@ import { UserComponent } from './components/user/user.component';
         CategoryComponent,
         ProductComponent,
         NumericFloatDirective,
-        UserComponent
+        UserComponent,
+        PaymentComponent,
+        DeliveryComponent
     ],
     imports: [
         BrowserModule,

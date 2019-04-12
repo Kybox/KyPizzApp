@@ -94,6 +94,12 @@ public class OrderServiceImpl implements OrderService {
         return optOrder.orElseThrow(() -> new NotFoundException("No order with saved status was found"));
     }
 
+    @Override
+    public Order findById(String id) {
+
+        return orderRepository.findById(id).orElseThrow(() -> new NotFoundException("The order was not found."));
+    }
+
     private Order createNewOrder(RegisteredUser customer, Cart cart) throws ProductNotFoundException {
 
         Order order = new Order();
@@ -101,7 +107,6 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(OrderStatus.SAVED);
         order.setRestaurant(restaurantProperties.getName());
         order.setPaid(false);
-        order.setToDeliver(false);
         order.setCreationDate(LocalDateTime.now());
 
         for (ProductFromCart productFromCart : cart.getProductList()) {

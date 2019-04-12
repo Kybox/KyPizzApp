@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {IUser} from "../../entity/account/user.model";
 import {AppSettings} from "../../config/app.settings";
 import {AuthenticationService} from "../authentication/authentication.service";
+import {Address} from "../../entity/account/address.model";
 
 @Injectable({
     providedIn: 'root'
@@ -22,5 +23,19 @@ export class AccountService {
                     headers: new HttpHeaders(
                         {"Authorization": "Bearer " + AuthenticationService.getJwtObject().token})
                 });
+    }
+
+    public getUserAddresses(): Promise<Address[]> {
+
+        return this.http
+            .get<Address[]>(AppSettings.ACCOUNT_API_URL + "addresses")
+            .toPromise();
+    }
+
+    public createNewAddress(address:Address) :Promise<Address> {
+
+        return this.http
+            .post<Address>(AppSettings.ACCOUNT_API_URL + "address", address)
+            .toPromise();
     }
 }

@@ -1,4 +1,4 @@
-package fr.kybox.kypizzapp.controller.client.cart;
+package fr.kybox.kypizzapp.controller.client;
 
 import fr.kybox.kypizzapp.model.GenericObject;
 import fr.kybox.kypizzapp.model.cart.Cart;

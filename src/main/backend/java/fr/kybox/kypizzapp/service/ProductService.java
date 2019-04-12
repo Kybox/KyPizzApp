@@ -1,5 +1,6 @@
 package fr.kybox.kypizzapp.service;
 
+import fr.kybox.kypizzapp.exception.NotFoundException;
 import fr.kybox.kypizzapp.model.Category;
 import fr.kybox.kypizzapp.model.Image;
 import fr.kybox.kypizzapp.model.Product;
@@ -20,5 +21,5 @@ public interface ProductService {
 
     Product updateProduct(Product product);
 
-    ResponseEntity<Product> findProductById(String id);
+    Product findProductById(String id) throws NotFoundException;
 }

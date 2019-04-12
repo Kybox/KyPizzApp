@@ -1,4 +1,4 @@
-package fr.kybox.kypizzapp.controller.client.order;
+package fr.kybox.kypizzapp.controller.client;
 
 import fr.kybox.kypizzapp.model.order.Order;
 import fr.kybox.kypizzapp.service.OrderService;

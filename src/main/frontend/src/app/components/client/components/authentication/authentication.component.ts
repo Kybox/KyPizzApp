@@ -98,10 +98,19 @@ export class AuthenticationComponent implements OnInit {
         console.log(loginForm);
         this.authService.login(loginForm).subscribe(
             resp => {
+
                 this.notify.emit(resp.body.token);
                 AuthenticationService.saveToken(resp.body, loginForm.remember);
+
                 if(this.beforeLogin === "cart")
-                    this.router.navigateByUrl("process/order/" + btoa("process1")).then(null);
+                    this.router.navigateByUrl("order/" + btoa("process1")).then(null);
+
+                else if(this.beforeLogin.startsWith("process"))
+                    this.router.navigateByUrl("order/" + btoa(this.beforeLogin)).then(null);
+
+                else if(this.beforeLogin === "admin")
+                    this.router.navigateByUrl("restricted/admin").then(null);
+
                 else this.router.navigate(["auth/account"]).then(null);
             },
             error => {

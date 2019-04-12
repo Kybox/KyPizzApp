@@ -4,6 +4,8 @@ import {CategoryComponent} from "./components/category/category.component";
 import {ProductComponent} from "./components/product/product.component";
 import {AdminComponent} from "./admin.component";
 import {UserComponent} from "./components/user/user.component";
+import {PaymentComponent} from "./components/payment/payment.component";
+import {DeliveryComponent} from "./components/delivery/delivery.component";
 
 const routes: Routes = [
     {
@@ -12,7 +14,9 @@ const routes: Routes = [
         children:[
             {path: "user", component: UserComponent},
             {path: "category", component: CategoryComponent},
-            {path: "product", component: ProductComponent}
+            {path: "product", component: ProductComponent},
+            {path: "payment", component: PaymentComponent},
+            {path: "delivery", component: DeliveryComponent}
         ]
     }
 ];

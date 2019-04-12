@@ -39,5 +39,20 @@
       "name": "kypizzapp.restaurant.name",
       "type": "java.lang.String",
       "description": "Description for kypizzapp.restaurant.name."
+    },
+    {
+      "name": "kypizzapp.payment.api.paypal.client-id",
+      "type": "java.lang.String",
+      "description": "Description for kypizzapp.payment.api.paypal.client-id."
+    },
+    {
+      "name": "kypizzapp.payment.api.paypal.secret",
+      "type": "java.lang.String",
+      "description": "Description for kypizzapp.payment.api.paypal.secret."
+    },
+    {
+      "name": "kypizzapp.payment.api.paypal.sandbox-url",
+      "type": "java.lang.String",
+      "description": "Description for kypizzapp.payment.api.paypal.sandbox-url."
     }
   ] }

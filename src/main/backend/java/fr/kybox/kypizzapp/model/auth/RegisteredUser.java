@@ -64,6 +64,9 @@ public class RegisteredUser implements Serializable {
     @DBRef
     private List<Address> addressList;
 
+    @NotNull
+    private String phoneNumber;
+
     @DBRef
     private List<Authority> authorities = new ArrayList<>();
 
@@ -155,6 +158,14 @@ public class RegisteredUser implements Serializable {
 
     public void setAddressList(List<Address> addressList) {
         this.addressList = addressList;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     @Override

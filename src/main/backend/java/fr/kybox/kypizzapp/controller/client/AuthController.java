@@ -1,4 +1,4 @@
-package fr.kybox.kypizzapp.controller.client.auth;
+package fr.kybox.kypizzapp.controller.client;
 
 import fr.kybox.kypizzapp.model.auth.*;
 import fr.kybox.kypizzapp.security.jwt.model.JwtToken;

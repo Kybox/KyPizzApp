@@ -14,6 +14,9 @@ public class Payment {
     @NotNull
     private String api;
 
+    @NotNull
+    private boolean activated;
+
     public Payment() {
     }
 
@@ -31,5 +34,13 @@ public class Payment {
 
     public void setApi(String api) {
         this.api = api;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 }

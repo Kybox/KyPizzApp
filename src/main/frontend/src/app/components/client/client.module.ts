@@ -8,10 +8,11 @@ import {HomeComponent} from './components/home/home.component';
 import {ProductComponent} from './components/product/product.component';
 import {AuthenticationComponent} from './components/authentication/authentication.component';
 import {FooterComponent} from './components/footer/footer.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AccountComponent} from './components/account/account.component';
 import {CookieService} from "ngx-cookie-service";
 import { OrderComponent } from './components/order/order.component';
+import {NumericIntegerFilter} from "../../directive/numeric-integer.directive";
 
 @NgModule({
     declarations: [
@@ -21,13 +22,15 @@ import { OrderComponent } from './components/order/order.component';
         AuthenticationComponent,
         FooterComponent,
         AccountComponent,
-        OrderComponent
+        OrderComponent,
+        NumericIntegerFilter
     ],
     imports: [
         BrowserModule,
         ClientRoutingModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormsModule
     ],
     providers: [CookieService],
     bootstrap: [ClientComponent],

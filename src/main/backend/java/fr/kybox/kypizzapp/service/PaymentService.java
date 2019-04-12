@@ -10,4 +10,5 @@ public interface PaymentService {
     List<Payment> findAll();
     Payment create(Payment payment);
     Payment update(Payment payment);
+    List<Payment> delete(String id);
 }
